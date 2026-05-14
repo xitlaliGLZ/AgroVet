@@ -1,0 +1,860 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>AgroVet - Veterinaria en línea</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        :root {
+            --color-primary: #2d5016;
+            --color-secondary: #8B7355;
+            --color-accent: #d4a574;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            box-shadow: 0 4px 6px rgba(45, 80, 22, 0.3);
+        }
+        
+        #header .logo {
+            font-weight: 900;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            color: #d4a574;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #nav ul.links li a {
+            color: #e8ddd1;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        #nav ul.links li a:hover {
+            color: #d4a574;
+            border-bottom: 2px solid #d4a574;
+        }
+        
+        #nav ul.links li.active a {
+            color: #d4a574;
+            border-bottom: 2px solid #d4a574;
+        }
+        
+        #intro {
+            background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 50%, #1a3009 100%);
+            color: #e8ddd1;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        #intro h1 {
+            font-size: 3.5em;
+            color: #d4a574;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+        
+        #intro p {
+            font-size: 1.3em;
+            color: #f0ebe0;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .button {
+            background: #2d5016 !important;
+            color: #d4a574 !important;
+            border: 2px solid #d4a574 !important;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            background: #d4a574 !important;
+            color: #2d5016 !important;
+        }
+        
+        .button.large {
+            padding: 15px 40px !important;
+            font-size: 1.1em;
+        }
+        
+        article header {
+            background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
+            color: white;
+        }
+        
+        article header h2 {
+            color: #d4a574;
+            font-size: 1.8em;
+        }
+        
+        article header .date {
+            background: #d4a574;
+            color: #2d5016;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        
+        #citas {
+            background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
+            color: white;
+        }
+        
+        #citas header h2 {
+            color: #d4a574;
+        }
+        
+        #citas input, #citas textarea {
+            background: #e8ddd1;
+            border: 2px solid #8B7355;
+            color: #2d5016;
+            font-weight: 500;
+        }
+        
+        #carrito-badge {
+            background: #d4a574;
+            color: #2d5016;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        #footer {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            color: #e8ddd1;
+        }
+        
+        #footer h3 {
+            color: #d4a574;
+        }
+        
+        #copyright {
+            background: #1a3009;
+            color: #d4a574;
+            border-top: 2px solid #d4a574;
+        }
+
+        .product-category {
+            flex: 1 1 48%;
+            min-width: 300px;
+        }
+
+        .product-category header.major {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .product-category header.major h2 {
+            color: #d4a574;
+            font-size: 1.8em;
+        }
+
+        #productos {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 3rem !important;
+            align-items: flex-start !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto !important;
+        }
+
+        #productos > .product-category {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .posts {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.5rem !important;
+            width: 100% !important;
+        }
+
+        .posts article {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #fff;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .posts article:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+
+        .posts article header {
+            padding: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
+            color: white;
+        }
+
+        .posts article header span.date {
+            display: inline-block;
+            background: #d4a574;
+            color: #2d5016;
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .posts article header h2 {
+            margin: 0.5rem 0 0 0;
+            min-height: 2.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4a574;
+            font-size: 1.3em;
+            word-wrap: break-word;
+        }
+
+        .posts article .image.fit {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+        }
+
+        .posts article .image.fit img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            padding: 10px;
+        }
+
+        .posts article p {
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .posts article .actions.special {
+            padding: 1rem;
+            text-align: center;
+            margin: 0;
+            background: #f9f9f9;
+        }
+
+        .posts article .actions.special li {
+            display: block;
+            width: 100%;
+        }
+
+        .posts article .actions.special .button {
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            #productos {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .posts {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #productos {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .posts {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+
+<div id="wrapper" class="fade-in">
+
+<!-- Intro -->
+<div id="intro">
+    <h1>🌾 AgroVet 🌾</h1>
+    <p>Soluciones veterinarias completas para tu ganado, caballos, aves y mascotas</p>
+    <p style="font-size: 0.95em; margin-top: 20px;">Medicamentos, accesorios y citas con expertos en sanidad animal</p>
+    <ul class="actions">
+        <li><a id="btn-main-action" href="login.html" class="button large">Iniciar sesión / crear cuenta</a></li>
+    </ul>
+    <p id="intro-note" style="margin-top: 1rem; font-size: 0.95em; color: #f1edeb;">Inicia sesión o regístrate para ver el catálogo completo y comprar.</p>
+</div>
+
+<!-- Header -->
+<header id="header">
+    <a href="index.html" class="logo">AgroVet</a>
+</header>
+
+<!-- Nav -->
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href="index.html">Inicio</a></li>
+        <li class="cliente-only"><a href="#productos">Medicamentos</a></li>
+        <li class="cliente-only"><a href="#productos">Accesorios</a></li>
+        <li class="cliente-only"><a href="#citas">Citas</a></li>
+        <li class="cliente-only"><a href="carrito.html">Carrito <span id="carrito-badge">0</span></a></li>
+        <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
+        <li id="area-cuenta" style="display:none;">
+            <span id="nombre-usuario"></span>
+            <a href="#" onclick="logout()">Cerrar sesión</a>
+        </li>
+    </ul>
+
+</nav>
+
+<!-- Main -->
+<div id="main">
+
+<!-- Featured -->
+<article class="post featured">
+    <header class="major">
+        <span class="date">🐄 Ganadería</span>
+        <h2>Salud y productividad de tu ganado</h2>
+        <p>Medicamentos, suplementos y asesoría veterinaria para mantener tu rebaño saludable y productivo.</p>
+    </header>
+    <a href="#" class="image main"><img src="images/fondo.png" alt="Ganado saludable" /></a>
+    <ul class="actions special">
+        <li><a href="#productos" class="button large">Ver catálogo completo</a></li>
+    </ul>
+</article>
+
+<!-- Productos -->
+<section id="productos" class="posts cliente-only">
+
+<!-- PRODUCTOS ORIGINALES -->
+<article>
+    <header>
+        <span class="date">Medicamento</span>
+        <h2>Oxivolt</h2>
+    </header>
+    <a href="#" class="image fit"><img src="images/Oxivolt.png" /></a>
+    <p>Medicamento veterinario para tratamiento general.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Oxivolt', 'Medicamento', 120)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header>
+        <span class="date">Medicamento</span>
+        <h2>Panacur 22%</h2>
+    </header>
+    <a href="#" class="image fit"><img src="images/Panacur.png" /></a>
+    <p>Desparasitante.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Panacur 22%', 'Medicamento', 150)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header>
+        <span class="date">Medicamento</span>
+        <h2>Iverfull</h2>
+    </header>
+    <a href="#" class="image fit"><img src="images/Iverfull.png" /></a>
+    <p>Antiparasitario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Iverfull', 'Medicamento', 95)" class="button">Agregar</button></li></ul>
+</article>
+
+<!-- NUEVOS PRODUCTOS AGREGADOS -->
+<article>
+    <header><span class="date">Medicamento</span><h2>Dexavet</h2></header>
+    <a href="#" class="image fit"><img src="images/Dexavet.png" /></a>
+    <p>Antiinflamatorio.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Dexavet', 'Medicamento', 160)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Biodipirona</h2></header>
+    <a href="#" class="image fit"><img src="images/Biodipirona.png" /></a>
+    <p>Analgésico.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Biodipirona', 'Medicamento', 90)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Correa</h2></header>
+    <a href="#" class="image fit"><img src="images/Correa.jpg" /></a>
+    <p>Accesorio resistente.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Correa', 'Accesorio', 80)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Collar</h2></header>
+    <a href="#" class="image fit"><img src="images/Collar.jpg" /></a>
+    <p>Collar cómodo.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Collar', 'Accesorio', 60)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Pechera</h2></header>
+    <a href="#" class="image fit"><img src="images/Pechera.jpg" /></a>
+    <p>Pechera ideal.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Pechera', 'Accesorio', 150)" class="button">Agregar</button></li></ul>
+</article>
+
+<!-- PRODUCTOS FALTANTES AGREGADOS -->
+<article>
+    <header><span class="date">Medicamento</span><h2>Super Flumi</h2></header>
+    <a href="#" class="image fit"><img src="images/SuperFlumi.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Super Flumi', 'Medicamento', 110)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Napzin</h2></header>
+    <a href="#" class="image fit"><img src="images/Napzin.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Napzin', 'Medicamento', 130)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Laxotonico Oral</h2></header>
+    <a href="#" class="image fit"><img src="images/LaxotonicoOral.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Laxotonico Oral', 'Medicamento', 85)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Rulaxton</h2></header>
+    <a href="#" class="image fit"><img src="images/Rulaxton.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Rulaxton', 'Medicamento', 140)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Hepatonic</h2></header>
+    <a href="#" class="image fit"><img src="images/Hepatonic.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Hepatonic', 'Medicamento', 150)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Actynoxel</h2></header>
+    <a href="#" class="image fit"><img src="images/Actynoxel.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Actynoxel', 'Medicamento', 135)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Oleovet Enzimatico</h2></header>
+    <a href="#" class="image fit"><img src="images/OleovetEnzimatico.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Oleovet Enzimatico', 'Medicamento', 125)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Tomo</h2></header>
+    <a href="#" class="image fit"><img src="images/Tomo.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Tomo', 'Medicamento', 80)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Quimipirona</h2></header>
+    <a href="#" class="image fit"><img src="images/Quimipirona.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Quimipirona', 'Medicamento', 100)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Polvo Optico</h2></header>
+    <a href="#" class="image fit"><img src="images/PolvoOptico.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Polvo Optico', 'Medicamento', 70)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Jabon Asuntol</h2></header>
+    <a href="#" class="image fit"><img src="images/JabonAsuntol.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Jabon Asuntol', 'Medicamento', 60)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Telmivet</h2></header>
+    <a href="#" class="image fit"><img src="images/Telmivet.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Telmivet', 'Medicamento', 145)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Bolfo</h2></header>
+    <a href="#" class="image fit"><img src="images/Bolfo.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Bolfo', 'Medicamento', 95)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+
+    <header><span class="date">Medicamento</span><h2>Bolos Uterinos</h2></header>
+    <a href="#" class="image fit"><img src="images/BolosUterinos.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Bolos Uterinos', 'Medicamento', 170)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Andobiotic</h2></header>
+    <a href="#" class="image fit"><img src="images/andobiotic.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Andobiotic', 'Medicamento', 155)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Calciprotein</h2></header>
+    <a href="#" class="image fit"><img src="images/Calciprotein.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Calciprotein', 'Medicamento', 120)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Suero Dextrosa</h2></header>
+    <a href="#" class="image fit"><img src="images/SueroDextrosa.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Suero Dextrosa', 'Medicamento', 50)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Caltonic</h2></header>
+    <a href="#" class="image fit"><img src="images/Caltonic.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Caltonic', 'Medicamento', 110)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Extracto de Higado</h2></header>
+    <a href="#" class="image fit"><img src="images/ExtractodeHigado.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Extracto de Higado', 'Medicamento', 130)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Complejo B</h2></header>
+    <a href="#" class="image fit"><img src="images/ComplejoB.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Complejo B', 'Medicamento', 75)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Vitafor</h2></header>
+    <a href="#" class="image fit"><img src="images/Vitafor.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Vitafor', 'Medicamento', 90)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Fluorfenicol</h2></header>
+    <a href="#" class="image fit"><img src="images/Fluorfenicol.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Fluorfenicol', 'Medicamento', 160)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Pomada Yodada</h2></header>
+    <a href="#" class="image fit"><img src="images/PomadaYodada.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Pomada Yodada', 'Medicamento', 55)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Balsamo Blanco</h2></header>
+    <a href="#" class="image fit"><img src="images/BalsamoBlanco.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Balsamo Blanco', 'Medicamento', 65)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Ortolan</h2></header>
+    <a href="#" class="image fit"><img src="images/Ortolan.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Ortolan', 'Medicamento', 140)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Reugol</h2></header>
+    <a href="#" class="image fit"><img src="images/Reugol.png" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Reugol', 'Medicamento', 100)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Medicamento</span><h2>Mamisan</h2></header>
+    <a href="#" class="image fit"><img src="images/Mamisan.jpg" /></a>
+    <p>Medicamento veterinario.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Mamisan', 'Medicamento', 120)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Correa de Cuero</h2></header>
+    <a href="#" class="image fit"><img src="images/CorreadeCuero.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Correa de Cuero', 'Accesorio', 120)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Bosales</h2></header>
+    <a href="#" class="image fit"><img src="images/Bosales.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Bosales', 'Accesorio', 200)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Placa Identificacion</h2></header>
+    <a href="#" class="image fit"><img src="images/PlacaIdentificacion.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Placa Identificacion', 'Accesorio', 50)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Cama para Mascota</h2></header>
+    <a href="#" class="image fit"><img src="images/CamaparaMascota.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Cama para Mascota', 'Accesorio', 300)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Transportadora</h2></header>
+    <a href="#" class="image fit"><img src="images/Transportadora.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Transportadora', 'Accesorio', 450)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Juguete para Perro</h2></header>
+    <a href="#" class="image fit"><img src="images/JugueteparaPerro.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Juguete para Perro', 'Accesorio', 70)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Comedero</h2></header>
+    <a href="#" class="image fit"><img src="images/Comedero.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Comedero', 'Accesorio', 90)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Bebedero</h2></header>
+    <a href="#" class="image fit"><img src="images/Bebedero.png" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Bebedero', 'Accesorio', 85)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Cepillo</h2></header>
+    <a href="#" class="image fit"><img src="images/Cepillo.jpg" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Cepillo', 'Accesorio', 60)" class="button">Agregar</button></li></ul>
+</article>
+
+<article>
+    <header><span class="date">Accesorio</span><h2>Shampoo Mascotas</h2></header>
+    <a href="#" class="image fit"><img src="images/shampoo.png" /></a>
+    <p>Accesorio para mascotas.</p>
+    <ul class="actions special"><li><button onclick="agregarAlCarrito('Shampoo Mascotas', 'Accesorio', 110)" class="button">Agregar</button></li></ul>
+</article>
+
+</section>
+
+<!-- NUEVA SECCIÓN DE CITAS (AGREGADA SIN BORRAR NADA) -->
+<section id="citas" class="post featured cliente-only">
+    <header class="major">
+        <h2>🚜 Agendar Consulta Veterinaria</h2>
+        <p>Programa una cita con nuestros expertos en sanidad animal para tu ganado, caballos o mascotas</p>
+    </header>
+
+    <div class="fields">
+        <div class="field"><input type="text" id="cita-nombre" placeholder="Tu nombre" required></div>
+        <div class="field"><input type="text" id="cita-animal" placeholder="Tipo de animal (Ganado, Caballo, Ave, etc.)" required></div>
+        <div class="field" style="display: flex; gap: 10px;"><input type="date" id="cita-fecha" required style="flex: 1;"><input type="time" id="cita-hora" required style="flex: 1;"></div>
+    </div>
+
+    <ul class="actions">
+        <li><input type="button" value="Agendar Consulta" onclick="agendarCita()" class="button"></li>
+    </ul>
+    <p id="cita-mensaje"></p>
+</section>
+
+<!-- Footer interno ORIGINAL (NO SE TOCÓ) -->
+<footer>
+    <div class="pagination">
+        <a href="#" class="page active">1</a>
+        <a href="#" class="page">2</a>
+        <a href="#" class="next">Next</a>
+    </div>
+</footer>
+
+</div>
+
+<!-- Footer ORIGINAL -->
+<footer id="footer">
+    <section>
+        <form method="post" action="#">
+            <div class="fields">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" />
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" />
+                </div>
+                <div class="field">
+                    <label>Mensaje</label>
+                    <textarea rows="3"></textarea>
+                </div>
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Enviar" /></li>
+            </ul>
+        </form>
+    </section>
+
+    <section class="split contact">
+        <section>
+            <h3>Dirección</h3>
+            <p>AgroVet - Enrique Olivares Santa #102A San Jose de Gracia,AGS</p>
+        </section>
+        <section>
+            <h3>Teléfono</h3>
+            <p>449-283-0325</p>
+        </section>
+        <section>
+            <h3>Email</h3>
+            <p>aylinmartionezsantos4@gmail.com</p>
+        </section>
+    </section>
+</footer>
+
+<div id="copyright">
+    <ul><li>&copy; AgroVet</li></ul>
+</div>
+
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Firebase Module Script -->
+<script type="module">
+    import { cargarCarritoLocal, actualizarCarritoUI, agregarAlCarrito, guardarCita, verificarAutenticacion, cerrarSesion } from './carrito.js';
+    
+    // Cargar carrito al iniciar
+    cargarCarritoLocal();
+    actualizarCarritoUI();
+    verificarAutenticacion();
+    
+    // Funciones globales
+    window.agregarAlCarrito = agregarAlCarrito;
+    window.guardarCita = guardarCita;
+    window.cerrarSesionUI = cerrarSesion;
+    
+    // Función para agendar cita
+    window.agendarCita = function() {
+        const nombre = document.getElementById('cita-nombre').value;
+        const animal = document.getElementById('cita-animal').value;
+        const fecha = document.getElementById('cita-fecha').value;
+        const hora = document.getElementById('cita-hora').value;
+        
+        if (nombre && animal && fecha && hora) {
+            guardarCita(nombre, animal, fecha, hora);
+        } else {
+            alert('Completa todos los campos');
+        }
+    };
+
+    function separarCatalogo() {
+        const productosSection = document.getElementById('productos');
+        if (!productosSection) return;
+
+        const articles = Array.from(productosSection.querySelectorAll(':scope > article'));
+        if (!articles.length) return;
+
+        const medicamentosWrapper = document.createElement('div');
+        medicamentosWrapper.className = 'product-category';
+        medicamentosWrapper.innerHTML = '<header class="major"><h2>Medicamentos</h2></header>';
+        const medicamentosPosts = document.createElement('div');
+        medicamentosPosts.className = 'posts';
+
+        const accesoriosWrapper = document.createElement('div');
+        accesoriosWrapper.className = 'product-category';
+        accesoriosWrapper.innerHTML = '<header class="major"><h2>Accesorios</h2></header>';
+        const accesoriosPosts = document.createElement('div');
+        accesoriosPosts.className = 'posts';
+
+        articles.forEach(article => {
+            const tipo = article.querySelector('span.date')?.textContent.trim().toLowerCase();
+            if (tipo === 'accesorio') {
+                accesoriosPosts.appendChild(article);
+            } else {
+                medicamentosPosts.appendChild(article);
+            }
+        });
+
+        medicamentosWrapper.appendChild(medicamentosPosts);
+        accesoriosWrapper.appendChild(accesoriosPosts);
+
+        productosSection.innerHTML = '';
+        productosSection.appendChild(medicamentosWrapper);
+        productosSection.appendChild(accesoriosWrapper);
+    }
+
+    function initProductoLinks() {
+        document.querySelectorAll('#productos article').forEach(article => {
+            const titulo = article.querySelector('h2');
+            const enlaceImagen = article.querySelector('a.image.fit');
+            if (!titulo || !enlaceImagen) return;
+
+            const nombre = titulo.textContent.trim();
+            const href = `producto.html?nombre=${encodeURIComponent(nombre)}`;
+
+            enlaceImagen.href = href;
+            enlaceImagen.style.cursor = 'pointer';
+
+            const linkTitulo = document.createElement('a');
+            linkTitulo.href = href;
+            linkTitulo.textContent = nombre;
+            linkTitulo.style.color = 'inherit';
+            linkTitulo.style.textDecoration = 'none';
+            linkTitulo.addEventListener('mouseover', () => linkTitulo.style.textDecoration = 'underline');
+            linkTitulo.addEventListener('mouseout', () => linkTitulo.style.textDecoration = 'none');
+
+            titulo.textContent = '';
+            titulo.appendChild(linkTitulo);
+        });
+    }
+
+    separarCatalogo();
+    initProductoLinks();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Calculadora de Impuestos - AgroVet</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			.calculadora-container {
+				max-width: 600px;
+				margin: 40px auto;
+				background: #fff;
+				padding: 40px;
+				border-radius: 10px;
+				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+			}
+
+			.calculadora-container h1 {
+				text-align: center;
+				color: #333;
+				margin-bottom: 30px;
+			}
+
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			.form-group label {
+				display: block;
+				margin-bottom: 8px;
+				font-weight: bold;
+				color: #333;
+			}
+
+			.form-group input {
+				width: 100%;
+				padding: 12px;
+				border: 2px solid #ddd;
+				border-radius: 5px;
+				font-size: 16px;
+				box-sizing: border-box;
+				transition: border-color 0.3s;
+			}
+
+			.form-group input:focus {
+				outline: none;
+				border-color: #49bf9d;
+			}
+
+			.btn-group {
+				display: flex;
+				gap: 10px;
+				margin-top: 30px;
+			}
+
+			button {
+				flex: 1;
+				padding: 12px;
+				border: none;
+				border-radius: 5px;
+				font-size: 16px;
+				font-weight: bold;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
+
+			.btn-calcular {
+				background-color: #49bf9d;
+				color: white;
+			}
+
+			.btn-calcular:hover {
+				background-color: #3da89f;
+			}
+
+			.btn-limpiar {
+				background-color: #f0f0f0;
+				color: #333;
+			}
+
+			.btn-limpiar:hover {
+				background-color: #e0e0e0;
+			}
+
+			.resultado {
+				margin-top: 30px;
+				padding: 20px;
+				background-color: #f5f5f5;
+				border-radius: 5px;
+				display: none;
+			}
+
+			.resultado.visible {
+				display: block;
+				animation: slideIn 0.3s ease-in-out;
+			}
+
+			@keyframes slideIn {
+				from {
+					opacity: 0;
+					transform: translateY(-10px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.resultado-fila {
+				display: flex;
+				justify-content: space-between;
+				padding: 10px 0;
+				border-bottom: 1px solid #ddd;
+			}
+
+			.resultado-fila:last-child {
+				border-bottom: none;
+			}
+
+			.resultado-label {
+				font-weight: bold;
+				color: #333;
+			}
+
+			.resultado-valor {
+				color: #49bf9d;
+				font-weight: bold;
+			}
+
+			.resultado-total {
+				font-size: 18px;
+				background-color: #49bf9d;
+				color: white;
+				padding: 10px;
+				margin-top: 15px;
+				border-radius: 5px;
+				text-align: center;
+			}
+
+			.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				padding: 12px;
+				border-radius: 5px;
+				margin-bottom: 20px;
+				display: none;
+			}
+
+			.error.visible {
+				display: block;
+			}
+
+			.info {
+				background-color: #d1ecf1;
+				color: #0c5460;
+				padding: 12px;
+				border-radius: 5px;
+				margin-bottom: 20px;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">AgroVet</a>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li><a href="index.html">Inicio</a></li>
+				<li><a href="ver_productos.php">Productos</a></li>
+				<li><a href="calculadora_impuestos.html" class="active">Calculadora de Impuestos</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<div class="calculadora-container">
+				<h1>Calculadora de Impuestos IVA</h1>
+
+				<div class="info">
+					📋 Calcula automáticamente el IVA (19%) sobre tu subtotal
+				</div>
+
+				<div class="error" id="error-message"></div>
+
+				<form id="formulario-iva">
+					<div class="form-group">
+						<label for="subtotal">Subtotal ($)</label>
+						<input type="number" id="subtotal" name="subtotal" placeholder="Ingresa el monto" min="0" step="0.01" required>
+					</div>
+
+					<div class="btn-group">
+						<button type="submit" class="btn-calcular">Calcular Impuestos</button>
+						<button type="reset" class="btn-limpiar">Limpiar</button>
+					</div>
+				</form>
+
+				<div class="resultado" id="resultado">
+					<div class="resultado-fila">
+						<span class="resultado-label">Subtotal:</span>
+						<span class="resultado-valor" id="resultado-subtotal">$0.00</span>
+					</div>
+					<div class="resultado-fila">
+						<span class="resultado-label">IVA (19%):</span>
+						<span class="resultado-valor" id="resultado-iva">$0.00</span>
+					</div>
+					<div class="resultado-total">
+						<span>Total a Pagar:</span><br>
+						<span id="resultado-total" style="font-size: 24px;">$0.00</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<section>
+				<form method="post" action="#">
+					<div class="fields">
+						<div class="field">
+							<label for="name">Nombre</label>
+							<input type="text" name="name" id="name" />
+						</div>
+						<div class="field">
+							<label for="email">Email</label>
+							<input type="email" name="email" id="email" />
+						</div>
+						<div class="field">
+							<label for="message">Mensaje</label>
+							<textarea name="message" id="message" rows="3"></textarea>
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Enviar Mensaje" /></li>
+					</ul>
+				</form>
+			</section>
+			<section class="split contact">
+				<section class="alt">
+					<h3>Dirección</h3>
+					<p>AgroVet - Enrique Olivares Santa #102A San Jose de Gracia,AGS</p>
+				</section>
+				<section>
+					<h3>Teléfono</h3>
+					<p><a href="tel:4492830325">449-283-0325</a></p>
+				</section>
+				<section>
+					<h3>Email</h3>
+					<p><a href="mailto:aylinmartionezsantos4@gmail.com">aylinmartionezsantos4@gmail.com</a></p>
+				</section>
+			</section>
+		</footer>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+			// Configuración
+			const API_URL = 'http://localhost:5000/api/calcular-impuestos';
+
+			// Elementos del DOM
+			const formulario = document.getElementById('formulario-iva');
+			const subtotalInput = document.getElementById('subtotal');
+			const resultado = document.getElementById('resultado');
+			const errorMessage = document.getElementById('error-message');
+
+			// Event Listener para el formulario
+			formulario.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				
+				const subtotal = parseFloat(subtotalInput.value);
+
+				// Validación
+				if (isNaN(subtotal) || subtotal <= 0) {
+					mostrarError('Por favor, ingresa un monto válido mayor a 0');
+					return;
+				}
+
+				// Limpiar errores
+				ocultarError();
+
+				// Llamar a la API
+				await calcularImpuestos(subtotal);
+			});
+
+			// Función para calcular impuestos mediante API
+			async function calcularImpuestos(subtotal) {
+				try {
+					const response = await fetch(API_URL, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ subtotal: subtotal })
+					});
+
+					if (!response.ok) {
+						const error = await response.json();
+						throw new Error(error.error || 'Error en el servidor');
+					}
+
+					const datos = await response.json();
+
+					// Mostrar resultados
+					document.getElementById('resultado-subtotal').textContent = 
+						formatearMoneda(datos.subtotal);
+					document.getElementById('resultado-iva').textContent = 
+						formatearMoneda(datos.iva);
+					document.getElementById('resultado-total').textContent = 
+						formatearMoneda(datos.total);
+
+					resultado.classList.add('visible');
+
+				} catch (error) {
+					console.error('Error:', error);
+					mostrarError('No se pudo conectar con el servidor. Asegúrate que el backend Flask está ejecutándose en puerto 5000.');
+				}
+			}
+
+			// Función para formatear como moneda
+			function formatearMoneda(valor) {
+				return new Intl.NumberFormat('es-CO', {
+					style: 'currency',
+					currency: 'COP'
+				}).format(valor);
+			}
+
+			// Función para mostrar errores
+			function mostrarError(mensaje) {
+				errorMessage.textContent = '❌ ' + mensaje;
+				errorMessage.classList.add('visible');
+				resultado.classList.remove('visible');
+			}
+
+			// Función para ocultar errores
+			function ocultarError() {
+				errorMessage.classList.remove('visible');
+			}
+
+			// Limpiar resultado al hacer reset
+			formulario.addEventListener('reset', () => {
+				resultado.classList.remove('visible');
+				ocultarError();
+			});
+		</script>
+	</body>
+</html>

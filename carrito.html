@@ -1,0 +1,1302 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Carrito - AgroVet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+        }
+        
+        #header .logo {
+            color: #d4a574;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #nav ul.links li a {
+            color: #e8ddd1;
+        }
+        
+        #nav ul.links li.active a {
+            color: #d4a574;
+            border-bottom: 2px solid #d4a574;
+        }
+        
+        #main section.post header {
+            background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
+            color: #d4a574;
+        }
+        
+        .carrito-item {
+            border: 2px solid #2d5016;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(45, 80, 22, 0.1);
+        }
+        
+        .carrito-item h3 {
+            color: #2d5016;
+            margin-bottom: 8px;
+        }
+        
+        .carrito-item p {
+            color: #555;
+            margin: 4px 0;
+        }
+        
+        .cantidad-control {
+            margin: 12px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .cantidad-control button {
+            padding: 6px 12px;
+            cursor: pointer;
+            background: #2d5016;
+            color: #d4a574;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .cantidad-control button:hover {
+            background: #d4a574;
+            color: #2d5016;
+        }
+        
+        .cantidad-control span {
+            font-weight: bold;
+            color: #2d5016;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .carrito-item > button {
+            background: #8B7355;
+            color: white;
+            padding: 6px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        
+        .carrito-item > button:hover {
+            background: #6b5344;
+        }
+
+        .carrito-layout {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 2fr 1fr;
+            align-items: start;
+        }
+
+        .cart-aside {
+            background: #fff;
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: 0 16px 35px rgba(0,0,0,0.08);
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 2px solid #d4d4d4;
+            border-radius: 1rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            background: #fafafa;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.08);
+        }
+
+        .payment-card.active {
+            border-color: #2d5016;
+            background: rgba(45, 80, 22, 0.12);
+            box-shadow: 0 18px 30px rgba(45, 80, 22, 0.15);
+        }
+
+        .card-details {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #d4d4d4;
+            border-radius: 1rem;
+            background: #f9f9f9;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .card-details.active {
+            display: block;
+        }
+
+        .card-field {
+            display: grid;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-field label {
+            font-weight: 700;
+            color: #2d5016;
+        }
+
+        .card-field input {
+            padding: 0.9rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.8rem;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .shipping-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px solid #d4d4d4;
+            border-radius: 1rem;
+            background: #f7f5ef;
+        }
+
+        .shipping-section.collapsed {
+            display: none;
+        }
+
+        .toggle-shipping-btn {
+            width: 100%;
+            background: #fff;
+            color: #2d5016;
+            border: 2px solid #2d5016;
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            text-align: center;
+            min-height: 52px;
+            line-height: 1.2;
+        }
+
+        .toggle-shipping-btn:hover {
+            background: #2d5016;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .shipping-section h2 {
+            margin-bottom: 1rem;
+            color: #2d5016;
+        }
+
+        .shipping-fields {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .address-summary {
+            margin-top: 1rem;
+            border-top: 1px dashed #ccc;
+            padding-top: 1rem;
+            color: #3d4b29;
+            background: #fffef8;
+            border-radius: 0.8rem;
+        }
+
+        .address-summary strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d5016;
+        }
+
+        .success-text {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-card input {
+            width: 18px;
+            height: 18px;
+            accent-color: #2d5016;
+        }
+
+        .method-icon {
+            font-size: 1.75rem;
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: #2d5016;
+            color: #fff;
+        }
+
+        .summary-box {
+            border: 2px solid #2d5016;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            background: #fff;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.9rem;
+            color: #444;
+        }
+
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #2d5016;
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 1.2rem 0;
+        }
+
+        .checkbox-field input {
+            transform: scale(1.2);
+            margin-top: 0.1rem;
+        }
+
+        .checkbox-label {
+            line-height: 1.5;
+        }
+
+        .checkbox-label a {
+            color: #2d5016;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .saved-card-item {
+            background: #f8faf4;
+            border: 1px solid #e2e8d2;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .saved-card-item:hover {
+            background: #f0f3e8;
+            border-color: #2d5016;
+        }
+
+        .saved-card-item.active {
+            background: rgba(45, 80, 22, 0.08);
+            border-color: #2d5016;
+        }
+
+        .error-text {
+            color: #b00020;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .success-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1100;
+            padding: 1rem;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-modal-content {
+            background: #fff;
+            border-radius: 1.5rem;
+            max-width: 720px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+            animation: floatIn 0.4s ease-out;
+        }
+
+        .success-chip {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #2d5016, #78a15b);
+            color: white;
+            box-shadow: 0 15px 30px rgba(45, 80, 22, 0.2);
+        }
+
+        .success-chip svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .success-modal h2 {
+            text-align: center;
+            color: #1f3f10;
+            margin-bottom: 0.35rem;
+        }
+
+        .success-modal p.subheadline {
+            text-align: center;
+            color: #55603b;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-details {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .success-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .success-card {
+            background: #f8faf4;
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8d2;
+        }
+
+        .success-card h3 {
+            margin: 0 0 0.75rem;
+            color: #2d5016;
+            font-size: 1rem;
+        }
+
+        .success-card p,
+        .success-card li {
+            margin: 0.35rem 0;
+            color: #404b2d;
+            line-height: 1.5;
+        }
+
+        .success-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .success-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.25rem;
+        }
+
+        .success-actions .button {
+            min-width: 180px;
+            padding: 0.95rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .success-actions .button.secondary {
+            background: #f3f4f1;
+            color: #2d5016;
+            border: 1px solid transparent;
+        }
+
+        .success-actions .button.secondary:hover {
+            background: #e7ebde;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .button.primary {
+            background: #2d5016;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .button.primary:hover {
+            background: #1f3f10;
+        }
+
+        .button.disabled {
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 1rem;
+            width: min(760px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.8rem;
+            box-shadow: 0 24px 50px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #2d5016;
+        }
+
+        .modal-content button {
+            margin-top: 1rem;
+            background: #2d5016;
+            color: #fff;
+        }
+
+        #carrito-total {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 30px 0;
+            color: #2d5016;
+            padding: 15px;
+            background: #d4a574;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<header id="header">
+    <a href="index.html" class="logo">AgroVet</a>
+</header>
+
+<nav id="nav">
+    <ul class="links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#productos">Productos</a></li>
+        <li class="active"><a href="carrito.html">Carrito</a></li>
+        <li><a href="index.html#citas">Citas</a></li>
+        <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
+        <li id="area-cuenta" style="display:none;">
+            <span id="nombre-usuario"></span>
+            <a href="#" onclick="cerrarSesion()">Cerrar sesión</a>
+        </li>
+    </ul>
+</nav>
+
+<div id="main">
+
+<section class="post">
+<header class="major">
+    <h1>Mi Carrito de Compras</h1>
+</header>
+
+<div class="carrito-layout">
+    <div>
+        <div id="carrito-items"></div>
+        <div id="carrito-total">Total: $0</div>
+    </div>
+
+    <aside class="cart-aside">
+        <h2>Métodos de pago</h2>
+        <div class="payment-methods" id="payment-methods">
+            <label class="payment-card" data-method="paypal">
+                <input type="radio" name="payment" value="PayPal">
+                <span class="method-icon">PP</span>
+                <div>
+                    <strong>PayPal</strong>
+                    <p>Pago rápido y seguro.</p>
+                </div>
+            </label>
+            <label class="payment-card" data-method="mercadopago">
+                <input type="radio" name="payment" value="Mercado Pago">
+                <span class="method-icon">MP</span>
+                <div>
+                    <strong>Mercado Pago</strong>
+                    <p>Pagos locales con tarjeta o efectivo.</p>
+                </div>
+            </label>
+            <label class="payment-card" data-method="card">
+                <input type="radio" name="payment" value="Tarjeta de crédito/débito">
+                <span class="method-icon">💳</span>
+                <div>
+                    <strong>Tarjeta de crédito/débito</strong>
+                    <p>Visa, MasterCard y más.</p>
+                </div>
+            </label>
+            <label class="payment-card" data-method="efectivo">
+                <input type="radio" name="payment" value="Efectivo en veterinaria">
+                <span class="method-icon">💵</span>
+                <div>
+                    <strong>Efectivo</strong>
+                    <p>Pagar en la veterinaria al recoger el producto.</p>
+                </div>
+            </label>
+
+            <div id="card-details" class="card-details" aria-hidden="true">
+                <h3>Datos de tu tarjeta</h3>
+                <div class="card-field">
+                    <label for="cardholder-name">Nombre en la tarjeta</label>
+                    <input type="text" id="cardholder-name" placeholder="Nombre completo" />
+                </div>
+                <div class="card-field">
+                    <label for="card-brand">Tipo de tarjeta</label>
+                    <select id="card-brand">
+                        <option value="">Selecciona tarjeta</option>
+                        <option value="Visa">Visa</option>
+                        <option value="MasterCard">MasterCard</option>
+                        <option value="Amex">American Express</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="card-field">
+                    <label for="card-number">Número de tarjeta</label>
+                    <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" />
+                </div>
+                <div class="card-field">
+                    <label for="card-expiration">Vencimiento</label>
+                    <input type="text" id="card-expiration" placeholder="MM/AA" maxlength="5" />
+                </div>
+                <div class="card-field">
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" placeholder="123" maxlength="4" />
+                </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="save-card">
+                    <label for="save-card" class="checkbox-label">Guardar esta tarjeta para futuros pagos</label>
+                </div>
+            </div>
+
+            <div id="saved-cards" class="card-details" aria-hidden="true" style="display: none;">
+                <h3>Mis tarjetas guardadas</h3>
+                <div id="saved-cards-list"></div>
+                <p style="color: #666; font-size: 0.95rem; margin-top: 1rem;">o usar una nueva tarjeta</p>
+            </div>
+
+            <div id="paypal-details" class="card-details" aria-hidden="true">
+                <h3>Datos de tu cuenta PayPal</h3>
+                <div class="card-field">
+                    <label for="paypal-name">Nombre completo</label>
+                    <input type="text" id="paypal-name" placeholder="Nombre completo" />
+                </div>
+                <div class="card-field">
+                    <label for="paypal-email">Email de PayPal</label>
+                    <input type="email" id="paypal-email" placeholder="tu@paypal.com" />
+                </div>
+            </div>
+
+            <div id="mercadopago-details" class="card-details" aria-hidden="true">
+                <h3>Datos para Mercado Pago</h3>
+                <div class="card-field">
+                    <label for="mercadopago-name">Nombre completo</label>
+                    <input type="text" id="mercadopago-name" placeholder="Nombre completo" />
+                </div>
+                <div class="card-field">
+                    <label for="mercadopago-email">Email de Mercado Pago</label>
+                    <input type="email" id="mercadopago-email" placeholder="tu@mercadopago.com" />
+                </div>
+                <div class="card-field">
+                    <label for="mercadopago-phone">Teléfono</label>
+                    <input type="tel" id="mercadopago-phone" placeholder="5512345678" maxlength="15" />
+                </div>
+            </div>
+
+            <button id="toggle-shipping-btn" type="button" class="toggle-shipping-btn">Datos de envío</button>
+
+            <div class="shipping-section collapsed" id="shipping-section">
+                <h2>Datos de envío</h2>
+                <div class="shipping-fields">
+                    <div class="card-field">
+                        <label for="shipping-name">Nombre completo</label>
+                        <input type="text" id="shipping-name" placeholder="Ej. María López" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-phone">Teléfono</label>
+                        <input type="tel" id="shipping-phone" placeholder="5512345678" maxlength="15" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-email">Correo</label>
+                        <input type="email" id="shipping-email" placeholder="tu@mail.com" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-street">Calle</label>
+                        <input type="text" id="shipping-street" placeholder="Av. Siempre Viva" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-number">Número</label>
+                        <input type="text" id="shipping-number" placeholder="123" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-colony">Colonia</label>
+                        <input type="text" id="shipping-colony" placeholder="Centro" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-city">Ciudad</label>
+                        <input type="text" id="shipping-city" placeholder="Ciudad de México" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-state">Estado</label>
+                        <input type="text" id="shipping-state" placeholder="CDMX" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-postal">Código postal</label>
+                        <input type="text" id="shipping-postal" placeholder="01234" maxlength="10" />
+                    </div>
+                    <div class="card-field">
+                        <label for="shipping-references">Referencias</label>
+                        <input type="text" id="shipping-references" placeholder="Entre la farmacia y la tienda" />
+                    </div>
+                </div>
+                <div id="shipping-summary" class="address-summary">
+                    <strong>Resumen de dirección</strong>
+                    <p>Completa tus datos de envío para generar la dirección.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="summary-box">
+            <h2>Resumen de compra</h2>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="summary-subtotal">$0</span>
+            </div>
+            <div class="summary-row">
+                <span>Impuestos (12%)</span>
+                <span id="summary-taxes">$0</span>
+            </div>
+            <div class="summary-row">
+                <span>Envío</span>
+                <span id="summary-shipping">$0</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total final</span>
+                <span id="summary-total">$0</span>
+            </div>
+        </div>
+
+        <div class="checkbox-field">
+            <input type="checkbox" id="acepta-terminos">
+            <label for="acepta-terminos" class="checkbox-label">Acepto los <a href="#" onclick="abrirModalTerminos(); return false;">términos y condiciones</a></label>
+        </div>
+        <div id="checkout-error" class="error-text" style="display:none;"></div>
+
+        <ul class="actions">
+            <li><input id="comprar-button" class="button primary" type="button" value="Comprar ahora" onclick="procederCompra()"></li>
+            <li><a href="index.html#productos" class="button">Seguir Comprando</a></li>
+        </ul>
+    </aside>
+</div>
+
+</section>
+
+</div>
+
+<div id="modal-terminos" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-terminos-title">
+    <div class="modal-content">
+        <h2 id="modal-terminos-title">Términos y condiciones</h2>
+        <p>Al completar tu compra aceptas los términos de venta, envíos y devoluciones de AgroVet.</p>
+        <ul>
+            <li>Los precios y el stock pueden variar al momento del pago.</li>
+            <li>El pago se procesa mediante el método seleccionado.</li>
+            <li>Los envíos se gestionan en un plazo de 24 a 72 horas hábiles.</li>
+            <li>Antes de finalizar la compra revisa que todos los datos sean correctos.</li>
+        </ul>
+        <button type="button" onclick="cerrarModalTerminos()">Cerrar</button>
+    </div>
+</div>
+
+<div id="success-modal" class="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
+    <div class="success-modal-content">
+        <div class="success-chip">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" stroke="white" stroke-width="3" />
+                <path d="M16 24l6 6 10-14" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <h2 id="success-modal-title">Compra confirmada</h2>
+        <p class="subheadline">Gracias por tu pedido en AgroVet. Tu compra ya está registrada y pronto la procesaremos.</p>
+
+        <div class="success-details">
+            <div class="success-card">
+                <h3>Número de pedido</h3>
+                <p id="success-order-id">#000000</p>
+                <h3>Fecha</h3>
+                <p id="success-order-date">--/--/----</p>
+                <h3>Estado</h3>
+                <p id="success-order-status">Pendiente</p>
+            </div>
+            <div class="success-card">
+                <h3>Método de pago</h3>
+                <p id="success-payment-method">--</p>
+                <h3>Total</h3>
+                <p id="success-order-total">$0</p>
+            </div>
+        </div>
+
+        <div class="success-card">
+            <h3>Dirección de envío</h3>
+            <p id="success-address">No disponible</p>
+        </div>
+
+        <div class="success-card">
+            <h3>Productos comprados</h3>
+            <ul id="success-products-list"></ul>
+        </div>
+
+        <div class="success-actions">
+            <button type="button" class="button primary" onclick="volverAlInicio()">Volver al inicio</button>
+            <button type="button" class="button secondary" onclick="descargarTicket()">Descargar ticket</button>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script type="module">
+    import { cargarCarritoLocal, actualizarCarritoUI, guardarCompra, verificarAutenticacion, cerrarSesion, obtenerResumenCarrito, validarEnvio, actualizarResumenDireccion, auth, db } from './carrito.js';
+    import { getDoc, doc as docRef, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+    
+    const paymentMethods = document.querySelectorAll('.payment-card');
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const taxesEl = document.getElementById('summary-taxes');
+    const shippingEl = document.getElementById('summary-shipping');
+    const totalEl = document.getElementById('summary-total');
+    const errorEl = document.getElementById('checkout-error');
+    const termsCheckbox = document.getElementById('acepta-terminos');
+    const modalTerminos = document.getElementById('modal-terminos');
+    const shippingSection = document.getElementById('shipping-section');
+    const toggleShippingBtn = document.getElementById('toggle-shipping-btn');
+    const shippingInputs = document.querySelectorAll('#shipping-section input');
+
+    if (toggleShippingBtn && shippingSection) {
+        toggleShippingBtn.addEventListener('click', () => {
+            const isCollapsed = shippingSection.classList.toggle('collapsed');
+            toggleShippingBtn.textContent = isCollapsed ? 'Mostrar datos de envío' : 'Ocultar datos de envío';
+            if (!isCollapsed) {
+                actualizarResumenDireccion();
+            }
+        });
+    }
+
+    shippingInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            actualizarResumenDireccion();
+            resetErrors();
+        });
+    });
+
+    function actualizarResumenCompra() {
+        const resumen = obtenerResumenCarrito();
+        const subtotal = resumen.subtotal;
+        const impuestos = Math.round(subtotal * 0.12);
+        const envio = subtotal > 0 ? 50 : 0;
+        const total = subtotal + impuestos + envio;
+
+        subtotalEl.textContent = `$${subtotal}`;
+        taxesEl.textContent = `$${impuestos}`;
+        shippingEl.textContent = `$${envio}`;
+        totalEl.textContent = `$${total}`;
+
+        const totalSpan = document.getElementById('carrito-total');
+        if (totalSpan) {
+            totalSpan.textContent = `Total: $${total}`;
+        }
+    }
+
+    function resetErrors() {
+        errorEl.style.display = 'none';
+        errorEl.textContent = '';
+    }
+
+    function detectarTipoTarjeta(numero) {
+        const valor = numero.replace(/\s+/g, '');
+        if (/^4\d{0,15}$/.test(valor)) return 'Visa';
+        if (/^(5[1-5]\d{0,14}|2(2[2-9]|[3-6]\d|7[01]|720)\d{0,12})$/.test(valor)) return 'MasterCard';
+        if (/^3[47]\d{0,13}$/.test(valor)) return 'Amex';
+        return '';
+    }
+
+    function formatearNumeroTarjeta(value) {
+        return value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function mostrarCardDetails(show) {
+        const cardDetails = document.getElementById('card-details');
+        if (!cardDetails) return;
+        cardDetails.classList.toggle('active', show);
+        cardDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }
+
+    function mostrarPayPalDetails(show) {
+        const paypalDetails = document.getElementById('paypal-details');
+        if (!paypalDetails) return;
+        paypalDetails.classList.toggle('active', show);
+        paypalDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }
+
+    function mostrarMercadoPagoDetails(show) {
+        const mpDetails = document.getElementById('mercadopago-details');
+        if (!mpDetails) return;
+        mpDetails.classList.toggle('active', show);
+        mpDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }
+
+    function validarTarjeta() {
+        const cardDetails = document.getElementById('card-details');
+        if (!cardDetails.classList.contains('active')) return true;
+
+        const nombre = document.getElementById('cardholder-name').value.trim();
+        const brand = document.getElementById('card-brand').value;
+        const numero = document.getElementById('card-number').value.replace(/\s+/g, '');
+        const expiracion = document.getElementById('card-expiration').value.trim();
+        const cvv = document.getElementById('card-cvv').value.trim();
+
+        if (!nombre || !brand || !numero || !expiracion || !cvv) {
+            errorEl.textContent = 'Completa todos los datos de la tarjeta.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!/^\d{13,19}$/.test(numero)) {
+            errorEl.textContent = 'El número de tarjeta debe contener entre 13 y 19 dígitos.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!/^(0[1-9]|1[0-2])\/(\d{2})$/.test(expiracion)) {
+            errorEl.textContent = 'El formato de vencimiento debe ser MM/AA.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!/^\d{3,4}$/.test(cvv)) {
+            errorEl.textContent = 'El CVV debe tener 3 o 4 dígitos.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        return true;
+    }
+
+    function validarPayPal() {
+        const paypalDetails = document.getElementById('paypal-details');
+        if (!paypalDetails.classList.contains('active')) return true;
+
+        const nombre = document.getElementById('paypal-name').value.trim();
+        const email = document.getElementById('paypal-email').value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!nombre || !email) {
+            errorEl.textContent = 'Completa todos los datos de PayPal.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!emailPattern.test(email)) {
+            errorEl.textContent = 'Ingresa un email válido para PayPal.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        return true;
+    }
+
+    function validarMercadoPago() {
+        const mpDetails = document.getElementById('mercadopago-details');
+        if (!mpDetails.classList.contains('active')) return true;
+
+        const nombre = document.getElementById('mercadopago-name').value.trim();
+        const email = document.getElementById('mercadopago-email').value.trim();
+        const telefono = document.getElementById('mercadopago-phone').value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^[0-9]{8,15}$/;
+
+        if (!nombre || !email || !telefono) {
+            errorEl.textContent = 'Completa todos los datos para Mercado Pago.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!emailPattern.test(email)) {
+            errorEl.textContent = 'Ingresa un email válido para Mercado Pago.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!phonePattern.test(telefono)) {
+            errorEl.textContent = 'Ingresa un teléfono válido (8-15 dígitos).';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        return true;
+    }
+
+    function seleccionarMetodo(paymentCard) {
+        paymentMethods.forEach(card => card.classList.remove('active'));
+        paymentCard.classList.add('active');
+        const input = paymentCard.querySelector('input');
+        if (input) input.checked = true;
+    }
+
+    const cardNumberInput = document.getElementById('card-number');
+    const cardBrandSelect = document.getElementById('card-brand');
+
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', (event) => {
+            const formatted = formatearNumeroTarjeta(event.target.value);
+            event.target.value = formatted;
+            const detectedBrand = detectarTipoTarjeta(formatted);
+            if (detectedBrand && cardBrandSelect && cardBrandSelect.value !== detectedBrand) {
+                cardBrandSelect.value = detectedBrand;
+            }
+        });
+    }
+
+    paymentMethods.forEach(card => {
+        card.addEventListener('click', () => {
+            seleccionarMetodo(card);
+            resetErrors();
+            const method = card.dataset.method;
+            mostrarCardDetails(method === 'card');
+            mostrarPayPalDetails(method === 'paypal');
+            mostrarMercadoPagoDetails(method === 'mercadopago');
+        });
+    });
+
+    function validarCompra() {
+        const metodoSeleccionado = document.querySelector('input[name="payment"]:checked');
+        if (!obtenerResumenCarrito().subtotal || obtenerResumenCarrito().subtotal === 0) {
+            errorEl.textContent = 'Tu carrito está vacío. Agrega productos antes de continuar.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (!metodoSeleccionado) {
+            errorEl.textContent = 'Debes seleccionar un método de pago.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        if (metodoSeleccionado.value === 'Tarjeta de crédito/débito' && !validarTarjeta()) {
+            return false;
+        }
+        if (metodoSeleccionado.value === 'PayPal' && !validarPayPal()) {
+            return false;
+        }
+        if (metodoSeleccionado.value === 'Mercado Pago' && !validarMercadoPago()) {
+            return false;
+        }
+        if (!validarEnvio()) {
+            return false;
+        }
+        if (!termsCheckbox.checked) {
+            errorEl.textContent = 'Debes aceptar los términos y condiciones antes de comprar.';
+            errorEl.style.display = 'block';
+            return false;
+        }
+        return true;
+    }
+
+    window.procederCompra = function() {
+        if (!validarCompra()) return;
+
+        const metodo = document.querySelector('input[name="payment"]:checked').value;
+        const total = totalEl.textContent;
+        const confirmMessage = `Vas a pagar ${total} usando ${metodo}.\n¿Deseas continuar con la compra?`;
+
+        if (confirm(confirmMessage)) {
+            guardarCompra();
+        }
+    };
+
+    window.abrirModalTerminos = function() {
+        modalTerminos.classList.add('active');
+    };
+
+    window.cerrarModalTerminos = function() {
+        modalTerminos.classList.remove('active');
+    };
+
+    window.onCarritoUpdated = function() {
+        actualizarResumenCompra();
+    };
+
+    function seleccionarMetodoPorDefecto() {
+        const defaultCard = document.querySelector('.payment-card[data-method="paypal"]');
+        if (defaultCard) {
+            seleccionarMetodo(defaultCard);
+            mostrarCardDetails(false);
+        }
+    }
+
+    function formatearFechaLocal(isoFecha) {
+        const fecha = new Date(isoFecha);
+        return fecha.toLocaleDateString('es-MX', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }) + ' • ' + fecha.toLocaleTimeString('es-MX', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function mostrarModalCompraExitosa(compra) {
+        const modal = document.getElementById('success-modal');
+        const productsList = document.getElementById('success-products-list');
+        const orderIdEl = document.getElementById('success-order-id');
+        const dateEl = document.getElementById('success-order-date');
+        const statusEl = document.getElementById('success-order-status');
+        const paymentMethodEl = document.getElementById('success-payment-method');
+        const totalEl = document.getElementById('success-order-total');
+        const addressEl = document.getElementById('success-address');
+
+        if (!modal || !productsList || !orderIdEl || !dateEl || !statusEl || !paymentMethodEl || !totalEl || !addressEl) return;
+
+        orderIdEl.textContent = compra.idPedido || 'N/A';
+        dateEl.textContent = formatearFechaLocal(compra.fecha);
+        statusEl.textContent = compra.estado ? compra.estado.charAt(0).toUpperCase() + compra.estado.slice(1) : 'Pendiente';
+        paymentMethodEl.textContent = compra.metodoPago || 'No especificado';
+        totalEl.textContent = `$${compra.total}`;
+        addressEl.textContent = compra.direccionResumen || 'No hay dirección registrada.';
+
+        productsList.innerHTML = compra.productos.map(item =>
+            `<li>${item.nombre} x${item.cantidad} — $${item.precio * item.cantidad}</li>`
+        ).join('');
+
+        modal.classList.add('active');
+        window.currentCompra = compra;
+    }
+
+    function ocultarModalCompraExitosa() {
+        const modal = document.getElementById('success-modal');
+        if (!modal) return;
+        modal.classList.remove('active');
+    }
+
+    function descargarTicket() {
+        const compra = window.currentCompra;
+        if (!compra) return;
+
+        const lines = [];
+        lines.push('AgroVet - Ticket de compra');
+        lines.push('--------------------------------------');
+        lines.push(`Pedido: ${compra.idPedido}`);
+        lines.push(`Fecha: ${formatearFechaLocal(compra.fecha)}`);
+        lines.push(`Estado: ${compra.estado}`);
+        lines.push(`Método de pago: ${compra.metodoPago}`);
+        lines.push('');
+        lines.push('Productos:');
+        compra.productos.forEach(item => {
+            lines.push(`- ${item.nombre} x${item.cantidad} — $${item.precio * item.cantidad}`);
+        });
+        lines.push('');
+        lines.push(`Total: $${compra.total}`);
+        lines.push('');
+        lines.push('Dirección de envío:');
+        lines.push(compra.direccionResumen || 'No disponible');
+        lines.push('');
+        lines.push('Gracias por comprar en AgroVet.');
+
+        const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ticket_agrovet_${compra.idPedido || Date.now()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    window.mostrarModalCompraExitosa = mostrarModalCompraExitosa;
+    window.ocultarModalCompraExitosa = ocultarModalCompraExitosa;
+    window.descargarTicket = descargarTicket;
+
+    function obtenerDatosMetodoPago() {
+        const metodo = document.querySelector('input[name="payment"]:checked')?.value || '';
+        let datos = { metodo: metodo };
+
+        if (metodo === 'Tarjeta de crédito/débito') {
+            datos.titular = document.getElementById('cardholder-name')?.value || '';
+            datos.tipo = document.getElementById('card-brand')?.value || '';
+            datos.numero = document.getElementById('card-number')?.value || '';
+        } else if (metodo === 'PayPal') {
+            datos.nombre = document.getElementById('paypal-name')?.value || '';
+            datos.email = document.getElementById('paypal-email')?.value || '';
+        } else if (metodo === 'Mercado Pago') {
+            datos.nombre = document.getElementById('mercadopago-name')?.value || '';
+            datos.email = document.getElementById('mercadopago-email')?.value || '';
+            datos.telefono = document.getElementById('mercadopago-phone')?.value || '';
+        }
+        return datos;
+    }
+
+    window.obtenerDatosMetodoPago = obtenerDatosMetodoPago;
+
+    let tarjetasGuardadas = [];
+    let tarjetaSeleccionada = null;
+
+    async function cargarTarjetasGuardadas() {
+        if (typeof verificarAutenticacion === 'undefined') return;
+        const user = auth?.currentUser;
+        if (!user) return;
+        
+        try {
+            const userDocRef = docRef(db, 'users', user.uid);
+            const userDoc = await getDoc(userDocRef);
+            tarjetasGuardadas = userDoc.data()?.tarjetasGuardadas || [];
+            mostrarTarjetasGuardadas();
+        } catch (error) {
+            console.error('Error cargando tarjetas guardadas:', error);
+        }
+    }
+
+    function mostrarTarjetasGuardadas() {
+        const savedCardsList = document.getElementById('saved-cards-list');
+        const savedCardsSection = document.getElementById('saved-cards');
+        if (!savedCardsList || !savedCardsSection) return;
+
+        if (tarjetasGuardadas.length === 0) {
+            savedCardsSection.style.display = 'none';
+            return;
+        }
+
+        savedCardsSection.style.display = 'block';
+        savedCardsList.innerHTML = tarjetasGuardadas.map((tarjeta, index) => `
+            <div class="saved-card-item ${tarjetaSeleccionada === index ? 'active' : ''}" onclick="usarTarjetaGuardada(${index})">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>${tarjeta.tipo}</strong> • ${tarjeta.numero.slice(-4).padStart(tarjeta.numero.length, '•')}
+                        <br><small style="color: #666;">${tarjeta.titular}</small>
+                    </div>
+                    <div style="text-align: right; font-size: 0.9rem; color: #999;">
+                        Vence: ${tarjeta.vencimiento}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.usarTarjetaGuardada = function(index) {
+        tarjetaSeleccionada = tarjetaSeleccionada === index ? null : index;
+        if (tarjetaSeleccionada !== null) {
+            const tarjeta = tarjetasGuardadas[tarjetaSeleccionada];
+            document.getElementById('cardholder-name').value = tarjeta.titular;
+            document.getElementById('card-brand').value = tarjeta.tipo;
+            document.getElementById('card-number').value = tarjeta.numero;
+            document.getElementById('card-expiration').value = tarjeta.vencimiento;
+            document.getElementById('card-cvv').value = '';
+        } else {
+            document.getElementById('cardholder-name').value = '';
+            document.getElementById('card-brand').value = '';
+            document.getElementById('card-number').value = '';
+            document.getElementById('card-expiration').value = '';
+            document.getElementById('card-cvv').value = '';
+        }
+        mostrarTarjetasGuardadas();
+    };
+
+    async function guardarTarjeta() {
+        const user = auth?.currentUser;
+        if (!user) return;
+
+        const checkGuardarTarjeta = document.getElementById('save-card');
+        if (!checkGuardarTarjeta || !checkGuardarTarjeta.checked) return;
+
+        const tarjeta = {
+            titular: document.getElementById('cardholder-name').value,
+            tipo: document.getElementById('card-brand').value,
+            numero: document.getElementById('card-number').value.replace(/\s+/g, ''),
+            vencimiento: document.getElementById('card-expiration').value,
+            fechaGuardado: new Date().toISOString()
+        };
+
+        try {
+            const userDocRef = docRef(db, 'users', user.uid);
+            const userDoc = await getDoc(userDocRef);
+            const tarjetasExistentes = userDoc.data()?.tarjetasGuardadas || [];
+            
+            if (tarjetasExistentes.length < 3) {
+                tarjetasExistentes.push(tarjeta);
+                await setDoc(userDocRef, { tarjetasGuardadas: tarjetasExistentes }, { merge: true });
+                tarjetasGuardadas = tarjetasExistentes;
+                mostrarTarjetasGuardadas();
+            }
+        } catch (error) {
+            console.error('Error guardando tarjeta:', error);
+        }
+    }
+
+    window.guardarTarjeta = guardarTarjeta;
+
+    function volverAlInicio() {
+        window.location.href = 'index.html';
+    }
+
+    cargarCarritoLocal();
+    actualizarCarritoUI();
+    verificarAutenticacion();
+    seleccionarMetodoPorDefecto();
+    actualizarResumenCompra();
+    actualizarResumenDireccion();
+    setTimeout(cargarTarjetasGuardadas, 500);
+    window.cerrarSesion = cerrarSesion;
+</script>
+
+</body>
+</html>

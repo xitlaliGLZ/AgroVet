@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Login - AgroVet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Firebase SDK -->    <style>
+        body {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            box-shadow: 0 4px 6px rgba(45, 80, 22, 0.3);
+        }
+        
+        #header .logo {
+            font-weight: 900;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            color: #d4a574;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #nav ul.links li a {
+            color: #e8ddd1;
+        }
+        
+        #nav ul.links li.active a {
+            color: #d4a574;
+            border-bottom: 2px solid #d4a574;
+        }
+        
+        section.post {
+            background: white;
+            border: 2px solid #2d5016;
+            border-radius: 8px;
+        }
+        
+        section.post header {
+            background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
+            color: #d4a574;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        section.post header h1 {
+            color: #d4a574;
+            font-size: 2em;
+        }
+        
+        .field label {
+            color: #2d5016;
+            font-weight: bold;
+        }
+        
+        .field input,
+        .field textarea {
+            background: #f9f9f9;
+            border: 2px solid #8B7355;
+            color: #2d5016;
+        }
+        
+        .field input:focus,
+        .field textarea:focus {
+            background: #fff;
+            border-color: #d4a574;
+            outline: none;
+        }
+        
+        .actions input {
+            background: #2d5016 !important;
+            color: white !important;
+            border: 2px solid #2d5016 !important;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .actions input:hover {
+            background: #d4a574 !important;
+            color: #2d5016 !important;
+            border-color: #d4a574 !important;
+        }
+        
+        button {
+            background: #3d6b1f;
+            color: #d4a574;
+            border: 2px solid #d4a574;
+            padding: 12px 30px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #d4a574;
+            color: #2d5016;
+        }
+        
+        p#login-message,
+        p#register-message {
+            color: #2d5016;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        hr {
+            border-color: #d4a574;
+            margin: 30px 0;
+        }
+    </style>
+    <!-- Firebase SDK -->    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+        import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+            authDomain: "agrovet-edb35.firebaseapp.com",
+            projectId: "agrovet-edb35",
+            storageBucket: "agrovet-edb35.firebasestorage.app",
+            messagingSenderId: "549615594048",
+            appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+            measurementId: "G-5YFZVDHHRX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        window.auth = auth;
+        window.db = db;
+        window.provider = provider;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithPopup = signInWithPopup;
+        window.signOut = signOut;
+        window.doc = doc;
+        window.setDoc = setDoc;
+    </script>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<header id="header">
+    <a href="index.html" class="logo">AgroVet</a>
+</header>
+
+<nav id="nav">
+    <ul class="links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="elements.html">Productos</a></li>
+        <li class="active"><a href="login.html">Iniciar sesión</a></li>
+    </ul>
+</nav>
+
+<div id="main">
+
+<section class="post">
+<header class="major">
+    <h1>🔐 Iniciar Sesión en AgroVet</h1>
+    <p>Accede a tu cuenta para comprar medicamentos y agendar consultas veterinarias</p>
+</header>
+
+<div class="field">
+    <label>Correo electrónico</label>
+    <input type="email" id="login-email" placeholder="tu@email.com" required>
+</div>
+
+<div class="field">
+    <label>Contraseña</label>
+    <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required>
+</div>
+
+<ul class="actions">
+    <li><input type="button" value="Iniciar Sesión" onclick="login()"></li>
+</ul>
+
+<p style="text-align: center; color: #555; margin: 10px 0;">o</p>
+
+<button onclick="loginWithGoogle()">🔗 Continuar con Google</button>
+
+<p id="login-message"></p>
+
+</section>
+
+<section class="post">
+<header class="major">
+    <h1>📝 Crear Cuenta en AgroVet</h1>
+    <p>Regístrate para acceder a todos nuestros servicios de medicina veterinaria</p>
+</header>
+
+<div class="field">
+    <label>Nombre completo</label>
+    <input type="text" id="register-name" placeholder="Tu nombre" required>
+</div>
+
+<div class="field">
+    <label>Correo electrónico</label>
+    <input type="email" id="register-email" placeholder="tu@email.com" required>
+</div>
+
+<div class="field">
+    <label>Contraseña</label>
+    <input type="password" id="register-password" placeholder="Crea una contraseña segura" required>
+</div>
+
+<div class="field">
+    <label>Tipo de cuenta</label>
+    <select id="register-role" required>
+        <option value="cliente">Cliente (Comprar productos)</option>
+        <option value="admin">Administrador (Gestionar sistema)</option>
+    </select>
+</div>
+
+<ul class="actions">
+    <li><input type="button" value="Crear Cuenta" onclick="register()"></li>
+</ul>
+
+<p id="register-message"></p>
+
+</section>
+
+</div>
+
+</div>
+
+<script>
+async function login() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    try {
+        await signInWithEmailAndPassword(window.auth, email, password);
+        document.getElementById('login-message').innerText = 'Inicio de sesión exitoso';
+        window.location.href = 'index.html';
+    } catch (error) {
+        document.getElementById('login-message').innerText = 'Error: ' + error.message;
+    }
+}
+
+async function register() {
+    const name = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const role = document.getElementById('register-role').value;
+    
+    try {
+        const userCredential = await createUserWithEmailAndPassword(window.auth, email, password);
+        const user = userCredential.user;
+        // Save additional data to Firestore
+        await setDoc(doc(window.db, 'users', user.uid), {
+            name: name,
+            email: email,
+            rol: role,
+            fechaRegistro: new Date().toISOString()
+        });
+        document.getElementById('register-message').innerText = 'Registro exitoso';
+        
+        // Redirigir según el rol
+        setTimeout(() => {
+            if (role === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    } catch (error) {
+        document.getElementById('register-message').innerText = 'Error: ' + error.message;
+    }
+}
+
+async function loginWithGoogle() {
+    try {
+        const result = await signInWithPopup(window.auth, window.provider);
+        const user = result.user;
+        // Save or update user data in Firestore
+        await setDoc(doc(window.db, 'users', user.uid), {
+            name: user.displayName,
+            email: user.email
+        }, { merge: true });
+        document.getElementById('login-message').innerText = 'Inicio con Google exitoso';
+        window.location.href = 'index.html';
+    } catch (error) {
+        document.getElementById('login-message').innerText = 'Error: ' + error.message;
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Producto | AgroVet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        :root {
+            --color-primary: #2d5016;
+            --color-secondary: #8B7355;
+            --color-accent: #d4a574;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
+        }
+
+        #header {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            box-shadow: 0 4px 6px rgba(45, 80, 22, 0.3);
+        }
+
+        #nav ul.links li a {
+            color: #e8ddd1;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        #nav ul.links li a:hover {
+            color: #d4a574;
+            border-bottom: 2px solid #d4a574;
+        }
+
+        #main {
+            padding: 3rem 2rem 2rem;
+        }
+
+        .product-panel {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1.5fr 1fr;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+
+        .product-gallery {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .product-gallery .main-image {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-gallery .main-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .gallery-thumbs {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.8rem;
+        }
+
+        .gallery-thumbs button {
+            border: 2px solid transparent;
+            background: #fff;
+            border-radius: 0.85rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .gallery-thumbs button.active,
+        .gallery-thumbs button:hover {
+            border-color: var(--color-accent);
+        }
+
+        .gallery-thumbs img {
+            width: 100%;
+            display: block;
+        }
+
+        .product-info {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+        }
+
+        .product-info span.category {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #2d5016;
+            font-weight: 700;
+        }
+
+        .product-info .price {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .product-info .actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .product-info .actions button {
+            flex: 1 1 45%;
+        }
+
+        .product-info .stock {
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        .product-info .specs {
+            margin-top: 1rem;
+            padding-left: 1.2rem;
+        }
+
+        .terms {
+            background: rgba(255,255,255,0.95);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .terms h3 {
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        @media screen and (max-width: 980px) {
+            .product-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="is-preload">
+    <div id="wrapper" class="fade-in">
+        <header id="header">
+            <a href="index.html" class="logo">AgroVet</a>
+        </header>
+
+        <nav id="nav">
+            <ul class="links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#productos">Catálogo</a></li>
+                <li><a href="carrito.html">Carrito <span id="carrito-badge">0</span></a></li>
+                <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
+                <li id="area-cuenta" style="display:none;"><span id="nombre-usuario"></span><a href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+            </ul>
+            <ul class="icons">
+                <li><a href="#" class="icon brands fa-facebook-f"></a></li>
+                <li><a href="#" class="icon brands fa-instagram"></a></li>
+            </ul>
+        </nav>
+
+        <div id="main">
+            <section class="post featured">
+                <a href="index.html" class="back-link">← Volver al catálogo</a>
+                <header class="major">
+                    <h2 id="producto-nombre">Cargando producto...</h2>
+                    <p id="producto-categoria" class="category"></p>
+                </header>
+
+                <div class="product-panel">
+                    <div class="product-gallery">
+                        <div class="main-image">
+                            <img id="producto-imagen" src="images/pic01.jpg" alt="Imagen del producto" />
+                        </div>
+                        <div class="gallery-thumbs" id="gallery-thumbs"></div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="price" id="producto-precio">$0</div>
+                        <p id="producto-descripcion">Selecciona un producto para ver detalles completos.</p>
+                        <ul class="specs" id="producto-especificaciones"></ul>
+                        <p class="stock" id="producto-stock"></p>
+                        <div class="actions">
+                            <button id="btn-carrito" class="button primary">Agregar al carrito</button>
+                            <button id="btn-comprar" class="button">Comprar ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="terms">
+                    <h3>Términos y condiciones</h3>
+                    <p>Las imágenes pueden variar ligeramente del producto entregado. Los precios y el stock están sujetos a disponibilidad al momento de la compra.</p>
+                    <p>Al agregar este producto al carrito aceptas nuestros términos de venta y la política de devoluciones. Si tienes dudas, consulta con nuestro equipo antes de finalizar tu compra.</p>
+                </section>
+            </section>
+        </div>
+
+        <footer id="footer">
+            <section>
+                <form method="post" action="#">
+                    <div class="fields">
+                        <div class="field">
+                            <label>Nombre</label>
+                            <input type="text" />
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" />
+                        </div>
+                        <div class="field">
+                            <label>Mensaje</label>
+                            <textarea rows="3"></textarea>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Enviar" /></li>
+                    </ul>
+                </form>
+            </section>
+            <section class="split contact">
+                <section>
+                    <h3>Dirección</h3>
+                    <p>AgroVet - Veterinaria</p>
+                </section>
+                <section>
+                    <h3>Teléfono</h3>
+                    <p>449-000-0000</p>
+                </section>
+                <section>
+                    <h3>Email</h3>
+                    <p>agrovet@gmail.com</p>
+                </section>
+            </section>
+        </footer>
+
+        <div id="copyright">
+            <ul><li>&copy; AgroVet</li></ul>
+        </div>
+    </div>
+
+    <script type="module">
+        import { cargarCarritoLocal, actualizarCarritoUI, agregarAlCarrito, verificarAutenticacion, cerrarSesion } from './carrito.js';
+
+        const productos = [
+            { nombre: 'Oxivolt', tipo: 'Medicamento', precio: 120, imagen: 'images/Oxivolt.png', descripcion: 'Medicamento veterinario para tratamiento general de ganado y mascotas.', especificaciones: ['Presentación 1L', 'Uso oral', 'Dosis según peso'], stock: 24, galeria: ['images/Oxivolt.png', 'images/pic01.jpg', 'images/pic02.jpg'] },
+            { nombre: 'Panacur 22%', tipo: 'Medicamento', precio: 150, imagen: 'images/Panacur.png', descripcion: 'Desparasitante de amplio espectro para animales.', especificaciones: ['Presentación 50 ml', 'Uso oral', 'Protección contra parásitos intestinales'], stock: 18, galeria: ['images/Panacur.png', 'images/pic03.jpg', 'images/pic04.jpg'] },
+            { nombre: 'Iverfull', tipo: 'Medicamento', precio: 95, imagen: 'images/Iverfull.png', descripcion: 'Antiparasitario efectivo para diversos animales.', especificaciones: ['Presentación 30 ml', 'Uso subcutáneo', 'Amplio espectro'], stock: 22, galeria: ['images/Iverfull.png', 'images/pic05.jpg', 'images/pic06.jpg'] },
+            { nombre: 'Dexavet', tipo: 'Medicamento', precio: 160, imagen: 'images/Dexavet.png', descripcion: 'Antiinflamatorio veterinario para uso profesional.', especificaciones: ['Presentación 20 ml', 'Uso intramuscular', 'Alivio rápido del dolor'], stock: 16, galeria: ['images/Dexavet.png', 'images/pic07.jpg', 'images/pic08.jpg'] },
+            { nombre: 'Biodipirona', tipo: 'Medicamento', precio: 90, imagen: 'images/Biodipirona.png', descripcion: 'Analgésico veterinario de amplio uso.', especificaciones: ['Presentación 20 ml', 'Uso oral', 'Alivio de dolor y fiebre'], stock: 27, galeria: ['images/Biodipirona.png', 'images/pic09.jpg', 'images/pic01.jpg'] },
+            { nombre: 'Correa', tipo: 'Accesorio', precio: 80, imagen: 'images/Correa.jpg', descripcion: 'Correa resistente ideal para paseos y entrenamiento.', especificaciones: ['Material resistente', 'Longitud 1.5 m', 'Cierre metálico seguro'], stock: 35, galeria: ['images/Correa.jpg', 'images/pic02.jpg', 'images/pic03.jpg'] },
+            { nombre: 'Collar', tipo: 'Accesorio', precio: 60, imagen: 'images/Collar.jpg', descripcion: 'Collar cómodo para perros y mascotas pequeñas.', especificaciones: ['Material suave', 'Ajustable', 'Hebilla resistente'], stock: 42, galeria: ['images/Collar.jpg', 'images/pic04.jpg', 'images/pic05.jpg'] },
+            { nombre: 'Pechera', tipo: 'Accesorio', precio: 150, imagen: 'images/Pechera.jpg', descripcion: 'Pechera ergonómica para mayor comodidad.', especificaciones: ['Material acolchado', 'Cierres seguros', 'Ajustable'], stock: 29, galeria: ['images/Pechera.jpg', 'images/pic06.jpg', 'images/pic07.jpg'] },
+            { nombre: 'Super Flumi', tipo: 'Medicamento', precio: 110, imagen: 'images/SuperFlumi.png', descripcion: 'Tratamiento veterinario especializado.', especificaciones: ['Presentación 20 ml', 'Uso oral', 'Fórmula concentrada'], stock: 21, galeria: ['images/SuperFlumi.png', 'images/pic08.jpg', 'images/pic09.jpg'] },
+            { nombre: 'Napzin', tipo: 'Medicamento', precio: 130, imagen: 'images/Napzin.jpg', descripcion: 'Medicamento para manejo del dolor y fiebre.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Efecto rápido'], stock: 19, galeria: ['images/Napzin.jpg', 'images/pic01.jpg', 'images/pic02.jpg'] },
+            { nombre: 'Laxotonico Oral', tipo: 'Medicamento', precio: 85, imagen: 'images/LaxotonicoOral.png', descripcion: 'Laxante oral para animales con estreñimiento.', especificaciones: ['Presentación 40 ml', 'Uso oral', 'Suave con el sistema digestivo'], stock: 26, galeria: ['images/LaxotonicoOral.png', 'images/pic03.jpg', 'images/pic04.jpg'] },
+            { nombre: 'Rulaxton', tipo: 'Medicamento', precio: 140, imagen: 'images/Rulaxton.png', descripcion: 'Solución veterinaria para infección y control.', especificaciones: ['Presentación 20 ml', 'Uso intramuscular', 'Fórmula de amplio espectro'], stock: 17, galeria: ['images/Rulaxton.png', 'images/pic05.jpg', 'images/pic06.jpg'] },
+            { nombre: 'Hepatonic', tipo: 'Medicamento', precio: 150, imagen: 'images/Hepatonic.jpg', descripcion: 'Suplemento hepático para animales debilitados.', especificaciones: ['Presentación 50 ml', 'Uso oral', 'Apoya función hepática'], stock: 20, galeria: ['images/Hepatonic.jpg', 'images/pic07.jpg', 'images/pic08.jpg'] },
+            { nombre: 'Actynoxel', tipo: 'Medicamento', precio: 135, imagen: 'images/Actynoxel.png', descripcion: 'Tratamiento veterinario avanzado para infecciones.', especificaciones: ['Presentación 25 ml', 'Uso inyectable', 'Formulación estable'], stock: 18, galeria: ['images/Actynoxel.png', 'images/pic09.jpg', 'images/pic01.jpg'] },
+            { nombre: 'Oleovet Enzimatico', tipo: 'Medicamento', precio: 125, imagen: 'images/OleovetEnzimatico.png', descripcion: 'Suplemento enzimático para mejor digestión.', especificaciones: ['Presentación 40 ml', 'Uso oral', 'Mejora la absorción de nutrientes'], stock: 28, galeria: ['images/OleovetEnzimatico.png', 'images/pic02.jpg', 'images/pic03.jpg'] },
+            { nombre: 'Tomo', tipo: 'Medicamento', precio: 80, imagen: 'images/Tomo.jpg', descripcion: 'Medicamento veterinario para uso general.', especificaciones: ['Presentación 20 ml', 'Uso oral', 'Fácil de administrar'], stock: 23, galeria: ['images/Tomo.jpg', 'images/pic04.jpg', 'images/pic05.jpg'] },
+            { nombre: 'Quimipirona', tipo: 'Medicamento', precio: 100, imagen: 'images/Quimipirona.png', descripcion: 'Antiinflamatorio veterinario efectivo.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Control de inflamación y dolor'], stock: 24, galeria: ['images/Quimipirona.png', 'images/pic06.jpg', 'images/pic07.jpg'] },
+            { nombre: 'Polvo Optico', tipo: 'Medicamento', precio: 70, imagen: 'images/PolvoOptico.png', descripcion: 'Tratamiento ocular para animales.', especificaciones: ['Presentación 15 g', 'Uso tópico', 'Alivio rápido de irritaciones'], stock: 12, galeria: ['images/PolvoOptico.png', 'images/pic08.jpg', 'images/pic09.jpg'] },
+            { nombre: 'Jabon Asuntol', tipo: 'Medicamento', precio: 60, imagen: 'images/JabonAsuntol.png', descripcion: 'Jabón veterinario para higiene y desinfección.', especificaciones: ['Presentación 125 g', 'Uso externo', 'Protección contra bacterias'], stock: 31, galeria: ['images/JabonAsuntol.png', 'images/pic01.jpg', 'images/pic02.jpg'] },
+            { nombre: 'Telmivet', tipo: 'Medicamento', precio: 145, imagen: 'images/Telmivet.png', descripcion: 'Medicamento veterinario de uso controlado.', especificaciones: ['Presentación 25 ml', 'Uso oral', 'Efecto prolongado'], stock: 15, galeria: ['images/Telmivet.png', 'images/pic03.jpg', 'images/pic04.jpg'] },
+            { nombre: 'Bolfo', tipo: 'Medicamento', precio: 95, imagen: 'images/Bolfo.png', descripcion: 'Antiparasitario veterinario para uso seguro.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Amplio espectro'], stock: 22, galeria: ['images/Bolfo.png', 'images/pic05.jpg', 'images/pic06.jpg'] },
+            { nombre: 'Bolos Uterinos', tipo: 'Medicamento', precio: 170, imagen: 'images/BolosUterinos.png', descripcion: 'Suplemento para la recuperación uterina.', especificaciones: ['Presentación 6 bolos', 'Uso oral', 'Apoya función reproductiva'], stock: 14, galeria: ['images/BolosUterinos.png', 'images/pic07.jpg', 'images/pic08.jpg'] },
+            { nombre: 'Andobiotic', tipo: 'Medicamento', precio: 155, imagen: 'images/Andobiotic.png', descripcion: 'Antibiótico veterinario para tratamientos profundos.', especificaciones: ['Presentación 30 ml', 'Uso inyectable', 'Amplio espectro bacteriano'], stock: 19, galeria: ['images/Andobiotic.png', 'images/pic09.jpg', 'images/pic01.jpg'] },
+            { nombre: 'Calciprotein', tipo: 'Medicamento', precio: 120, imagen: 'images/Calciprotein.png', descripcion: 'Suplemento nutricional para animales en crecimiento.', especificaciones: ['Presentación 50 ml', 'Uso oral', 'Contiene calcio y proteínas'], stock: 26, galeria: ['images/Calciprotein.png', 'images/pic02.jpg', 'images/pic03.jpg'] },
+            { nombre: 'Suero Dextrosa', tipo: 'Medicamento', precio: 50, imagen: 'images/SueroDextrosa.png', descripcion: 'Solución para hidratación y energía rápida.', especificaciones: ['Presentación 500 ml', 'Uso intravenoso', 'Rehidratación eficaz'], stock: 20, galeria: ['images/SueroDextrosa.png', 'images/pic04.jpg', 'images/pic05.jpg'] },
+            { nombre: 'Caltonic', tipo: 'Medicamento', precio: 110, imagen: 'images/Caltonic.png', descripcion: 'Suplemento mineral para recuperación rápida.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Ideal para animales con deficiencias'], stock: 25, galeria: ['images/Caltonic.png', 'images/pic06.jpg', 'images/pic07.jpg'] },
+            { nombre: 'Extracto de Higado', tipo: 'Medicamento', precio: 130, imagen: 'images/ExtractoDeHigado.png', descripcion: 'Suplemento hepático con extracto natural.', especificaciones: ['Presentación 40 ml', 'Uso oral', 'Apoya función del hígado'], stock: 17, galeria: ['images/ExtractoDeHigado.png', 'images/pic08.jpg', 'images/pic09.jpg'] },
+            { nombre: 'Complejo B', tipo: 'Medicamento', precio: 75, imagen: 'images/ComplejoB.png', descripcion: 'Vitaminas B en presentación veterinaria.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Fortalece metabolismo'], stock: 29, galeria: ['images/ComplejoB.png', 'images/pic01.jpg', 'images/pic02.jpg'] },
+            { nombre: 'Vitafor', tipo: 'Medicamento', precio: 90, imagen: 'images/pic01.jpg', descripcion: 'Suplemento vitamínico de apoyo general.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Fortalece sistema inmune'], stock: 33, galeria: ['images/pic01.jpg', 'images/pic03.jpg', 'images/pic04.jpg'] },
+            { nombre: 'Fluorfenicol', tipo: 'Medicamento', precio: 160, imagen: 'images/pic02.jpg', descripcion: 'Antibiótico veterinario para infecciones graves.', especificaciones: ['Presentación 30 ml', 'Uso inyectable', 'Amplia cobertura'], stock: 18, galeria: ['images/pic02.jpg', 'images/pic05.jpg', 'images/pic06.jpg'] },
+            { nombre: 'Pomada Yodada', tipo: 'Medicamento', precio: 55, imagen: 'images/pic03.jpg', descripcion: 'Pomada antiséptica para heridas y lesiones.', especificaciones: ['Presentación 50 g', 'Uso tópico', 'Desinfecta y protege'], stock: 34, galeria: ['images/pic03.jpg', 'images/pic07.jpg', 'images/pic08.jpg'] },
+            { nombre: 'Balsamo Blanco', tipo: 'Medicamento', precio: 65, imagen: 'images/pic04.jpg', descripcion: 'Bálsamo para alivio local y regeneración.', especificaciones: ['Presentación 40 g', 'Uso tópico', 'Calmante y reparador'], stock: 30, galeria: ['images/pic04.jpg', 'images/pic09.jpg', 'images/pic01.jpg'] },
+            { nombre: 'Ortolan', tipo: 'Medicamento', precio: 140, imagen: 'images/pic05.jpg', descripcion: 'Solución veterinaria para soporte muscular.', especificaciones: ['Presentación 25 ml', 'Uso inyectable', 'Regeneración muscular'], stock: 16, galeria: ['images/pic05.jpg', 'images/pic02.jpg', 'images/pic03.jpg'] },
+            { nombre: 'Reugol', tipo: 'Medicamento', precio: 100, imagen: 'images/pic06.jpg', descripcion: 'Suplemento para regulación fisiológica.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Soporte de equilibrio interno'], stock: 20, galeria: ['images/pic06.jpg', 'images/pic04.jpg', 'images/pic05.jpg'] },
+            { nombre: 'Mamisan', tipo: 'Medicamento', precio: 120, imagen: 'images/pic07.jpg', descripcion: 'Suplemento fortalecedor para animales.', especificaciones: ['Presentación 30 ml', 'Uso oral', 'Apoyo nutritivo'], stock: 22, galeria: ['images/pic07.jpg', 'images/pic06.jpg', 'images/pic08.jpg'] },
+            { nombre: 'Correa de Cuero', tipo: 'Accesorio', precio: 120, imagen: 'images/pic08.jpg', descripcion: 'Correa de cuero premium para paseos cómodos.', especificaciones: ['Material cuero', 'Longitud 1.5 m', 'Remache reforzado'], stock: 19, galeria: ['images/pic08.jpg', 'images/pic09.jpg', 'images/pic01.jpg'] },
+            { nombre: 'Bosales', tipo: 'Accesorio', precio: 200, imagen: 'images/pic09.jpg', descripcion: 'Bosal para equinos, cómodo y seguro.', especificaciones: ['Ajustable', 'Material resistente', 'Uso para doma ligera'], stock: 11, galeria: ['images/pic09.jpg', 'images/pic02.jpg', 'images/pic03.jpg'] },
+            { nombre: 'Placa Identificacion', tipo: 'Accesorio', precio: 50, imagen: 'images/pic01.jpg', descripcion: 'Placa personalizada para identificar a tu mascota.', especificaciones: ['Acero inoxidable', 'Grabado disponible', 'Ligera y duradera'], stock: 44, galeria: ['images/pic01.jpg', 'images/pic04.jpg', 'images/pic05.jpg'] },
+            { nombre: 'Cama para Mascota', tipo: 'Accesorio', precio: 300, imagen: 'images/pic02.jpg', descripcion: 'Cama cómoda y confortable para mascotas.', especificaciones: ['Acolchado suave', 'Base antideslizante', 'Fácil de lavar'], stock: 14, galeria: ['images/pic02.jpg', 'images/pic06.jpg', 'images/pic07.jpg'] },
+            { nombre: 'Transportadora', tipo: 'Accesorio', precio: 450, imagen: 'images/pic03.jpg', descripcion: 'Transportadora segura para viajes cortos.', especificaciones: ['Ventilación adecuada', 'Cierre seguro', 'Resistente al impacto'], stock: 12, galeria: ['images/pic03.jpg', 'images/pic08.jpg', 'images/pic09.jpg'] },
+            { nombre: 'Juguete para Perro', tipo: 'Accesorio', precio: 70, imagen: 'images/pic04.jpg', descripcion: 'Juguete para mantener a tu perro entretenido.', especificaciones: ['Material duradero', 'Tamaño mediano', 'Fácil de limpiar'], stock: 38, galeria: ['images/pic04.jpg', 'images/pic01.jpg', 'images/pic02.jpg'] },
+            { nombre: 'Comedero', tipo: 'Accesorio', precio: 90, imagen: 'images/pic05.jpg', descripcion: 'Comedero estable y resistente para mascotas.', especificaciones: ['Antideslizante', 'Fácil de limpiar', 'Diseño ergonómico'], stock: 34, galeria: ['images/pic05.jpg', 'images/pic03.jpg', 'images/pic04.jpg'] },
+            { nombre: 'Bebedero', tipo: 'Accesorio', precio: 85, imagen: 'images/pic06.jpg', descripcion: 'Bebedero práctico para agua fresca constante.', especificaciones: ['Capacidad 1.5 L', 'Material resistente', 'Fácil de llenar'], stock: 33, galeria: ['images/pic06.jpg', 'images/pic05.jpg', 'images/pic06.jpg'] },
+            { nombre: 'Cepillo', tipo: 'Accesorio', precio: 60, imagen: 'images/pic07.jpg', descripcion: 'Cepillo para cuidado del pelaje de tu mascota.', especificaciones: ['Cerdas suaves', 'Mango ergonómico', 'Apto para todo tipo de pelo'], stock: 40, galeria: ['images/pic07.jpg', 'images/pic08.jpg', 'images/pic09.jpg'] },
+            { nombre: 'Shampoo Mascotas', tipo: 'Accesorio', precio: 110, imagen: 'images/pic08.jpg', descripcion: 'Shampoo suave para limpieza e hidratación.', especificaciones: ['Aroma fresco', 'Fórmula sin parabenos', 'Suave con la piel'], stock: 36, galeria: ['images/pic08.jpg', 'images/pic01.jpg', 'images/pic02.jpg'] }
+        ];
+
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        const nombreProducto = decodeURIComponent(getQueryParam('nombre') || '').trim();
+        const producto = productos.find(item => item.nombre.toLowerCase() === nombreProducto.toLowerCase());
+
+        const nombreEl = document.getElementById('producto-nombre');
+        const categoriaEl = document.getElementById('producto-categoria');
+        const precioEl = document.getElementById('producto-precio');
+        const descripcionEl = document.getElementById('producto-descripcion');
+        const especificacionesEl = document.getElementById('producto-especificaciones');
+        const stockEl = document.getElementById('producto-stock');
+        const imagenEl = document.getElementById('producto-imagen');
+        const galleryEl = document.getElementById('gallery-thumbs');
+        const btnCarrito = document.getElementById('btn-carrito');
+        const btnComprar = document.getElementById('btn-comprar');
+
+        cargarCarritoLocal();
+        actualizarCarritoUI();
+        verificarAutenticacion();
+        window.cerrarSesion = cerrarSesion;
+
+        function mostrarNotFound() {
+            nombreEl.textContent = 'Producto no encontrado';
+            categoriaEl.textContent = '';
+            precioEl.textContent = '';
+            descripcionEl.textContent = 'No se encontró información para el producto solicitado. Regresa al catálogo para elegir otro producto.';
+            stockEl.textContent = '';
+            galleryEl.innerHTML = '';
+        }
+
+        function actualizarImagen(src) {
+            imagenEl.src = src;
+            imagenEl.alt = nombreProducto;
+        }
+
+        if (!producto) {
+            mostrarNotFound();
+        } else {
+            document.title = `${producto.nombre} | AgroVet`;
+            nombreEl.textContent = producto.nombre;
+            categoriaEl.textContent = producto.tipo;
+            precioEl.textContent = `$${producto.precio}`;
+            descripcionEl.textContent = producto.descripcion;
+            stockEl.textContent = `Stock disponible: ${producto.stock}`;
+            imagenEl.src = producto.imagen;
+            imagenEl.alt = producto.nombre;
+
+            especificacionesEl.innerHTML = '';
+            producto.especificaciones.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                especificacionesEl.appendChild(li);
+            });
+
+            galleryEl.innerHTML = '';
+            producto.galeria.forEach((imgSrc, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.addEventListener('click', () => {
+                    actualizarImagen(imgSrc);
+                    galleryEl.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+                if (index === 0) button.classList.add('active');
+                button.innerHTML = `<img src="${imgSrc}" alt="Galería ${producto.nombre} ${index + 1}" />`;
+                galleryEl.appendChild(button);
+            });
+
+            btnCarrito.addEventListener('click', () => {
+                agregarAlCarrito(producto.nombre, producto.tipo, producto.precio);
+            });
+
+            btnComprar.addEventListener('click', () => {
+                agregarAlCarrito(producto.nombre, producto.tipo, producto.precio);
+                window.location.href = 'carrito.html';
+            });
+        }
+    </script>
+</body>
+</html>
