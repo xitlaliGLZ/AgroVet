@@ -159,8 +159,14 @@
 <nav id="nav">
     <ul class="links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="elements.html">Productos</a></li>
-        <li class="active"><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="index.html#productos">Catálogo</a></li>
+        <li><a href="index.html#citas">Citas</a></li>
+        <li><a href="carrito.html">Carrito</a></li>
+        <li id="area-login" class="active"><a href="login.html">Iniciar sesión</a></li>
+        <li id="area-cuenta" style="display:none;">
+            <span id="nombre-usuario"></span>
+            <a href="#" onclick="logout()">Cerrar sesión</a>
+        </li>
     </ul>
 </nav>
 
@@ -294,6 +300,12 @@ async function loginWithGoogle() {
         document.getElementById('login-message').innerText = 'Error: ' + error.message;
     }
 }
+</script>
+
+<script type="module">
+    import { verificarAutenticacion, logout } from './carrito.js';
+    verificarAutenticacion();
+    window.logout = logout;
 </script>
 
 </body>

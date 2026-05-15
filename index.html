@@ -16,6 +16,10 @@
         body {
             background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
         }
+
+        .cliente-only {
+            display: none;
+        }
         
         #header {
             background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
@@ -316,18 +320,15 @@
 <!-- Nav -->
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href="index.html">Inicio</a></li>
-        <li class="cliente-only"><a href="#productos">Medicamentos</a></li>
-        <li class="cliente-only"><a href="#productos">Accesorios</a></li>
-        <li class="cliente-only"><a href="#citas">Citas</a></li>
+        <li class="active cliente-only"><a href="index.html">Inicio</a></li>
+        <li class="cliente-only"><a href="index.html#productos">Catálogo</a></li>
+        <li class="cliente-only"><a href="index.html#citas">Citas</a></li>
         <li class="cliente-only"><a href="carrito.html">Carrito <span id="carrito-badge">0</span></a></li>
-        <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
         <li id="area-cuenta" style="display:none;">
             <span id="nombre-usuario"></span>
             <a href="#" onclick="logout()">Cerrar sesión</a>
         </li>
     </ul>
-
 </nav>
 
 <!-- Main -->
@@ -426,7 +427,7 @@
 
 <article>
     <header><span class="date">Medicamento</span><h2>Napzin</h2></header>
-    <a href="#" class="image fit"><img src="images/Napzin.jpg" /></a>
+    <a href="#" class="image fit"><img src="images/napzin.jpg" /></a>
     <p>Medicamento veterinario.</p>
     <ul class="actions special"><li><button onclick="agregarAlCarrito('Napzin', 'Medicamento', 130)" class="button">Agregar</button></li></ul>
 </article>
@@ -765,7 +766,7 @@
 
 <!-- Firebase Module Script -->
 <script type="module">
-    import { cargarCarritoLocal, actualizarCarritoUI, agregarAlCarrito, guardarCita, verificarAutenticacion, cerrarSesion } from './carrito.js';
+    import { cargarCarritoLocal, actualizarCarritoUI, agregarAlCarrito, guardarCita, verificarAutenticacion, cerrarSesion, logout } from './carrito.js';
     
     // Cargar carrito al iniciar
     cargarCarritoLocal();
@@ -775,6 +776,7 @@
     // Funciones globales
     window.agregarAlCarrito = agregarAlCarrito;
     window.guardarCita = guardarCita;
+    window.logout = logout;
     window.cerrarSesionUI = cerrarSesion;
     
     // Función para agendar cita

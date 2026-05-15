@@ -17,8 +17,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db };
-
 // Carrito local
 let carrito = [];
 
@@ -240,40 +238,25 @@ export async function guardarCompra() {
         }
         
         try {
-            const metodoPago = document.querySelector('input[name="payment"]:checked')?.value || 'No especificado';
-            const datosMetodoPago = typeof window !== 'undefined' && typeof window.obtenerDatosMetodoPago === 'function' 
-                ? window.obtenerDatosMetodoPago() 
-                : {};
             const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
             const direccionResumen = generarResumenDireccion(envio);
-            const orderId = `pedido_${user.uid}_${Date.now()}`;
             const compra = {
-                idPedido: orderId,
                 usuarioId: user.uid,
                 usuario: user.email,
                 productos: carrito,
                 total: total,
-                metodoPago: metodoPago,
-                datosMetodoPago: datosMetodoPago,
                 fecha: new Date().toISOString(),
                 estado: 'pendiente',
                 envio: envio,
                 direccionResumen: direccionResumen
             };
             
-            await setDoc(doc(db, 'compras', orderId), compra);
+            await setDoc(doc(db, 'compras', user.uid + '_' + Date.now()), compra);
+            alert('¡Compra realizada con éxito! Tu pedido será procesado en breve.');
             carrito = [];
             guardarCarritoLocal();
             actualizarCarritoUI();
-            if (typeof window !== 'undefined' && typeof window.guardarTarjeta === 'function') {
-                await window.guardarTarjeta();
-            }
-            if (typeof window !== 'undefined' && typeof window.mostrarModalCompraExitosa === 'function') {
-                window.mostrarModalCompraExitosa(compra);
-            } else {
-                alert('¡Compra realizada con éxito! Tu pedido será procesado en breve.');
-                window.location.href = 'index.html';
-            }
+            window.location.href = 'index.html';
         } catch (error) {
             alert('Error al guardar compra: ' + error.message);
         }

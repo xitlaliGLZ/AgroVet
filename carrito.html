@@ -308,157 +308,10 @@
             cursor: pointer;
         }
 
-        .saved-card-item {
-            background: #f8faf4;
-            border: 1px solid #e2e8d2;
-            border-radius: 0.8rem;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: border-color 0.2s ease, background 0.2s ease;
-        }
-
-        .saved-card-item:hover {
-            background: #f0f3e8;
-            border-color: #2d5016;
-        }
-
-        .saved-card-item.active {
-            background: rgba(45, 80, 22, 0.08);
-            border-color: #2d5016;
-        }
-
         .error-text {
             color: #b00020;
             font-weight: 700;
             margin-top: 0.5rem;
-        }
-
-        .success-modal {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 1100;
-            padding: 1rem;
-        }
-
-        .success-modal.active {
-            display: flex;
-        }
-
-        .success-modal-content {
-            background: #fff;
-            border-radius: 1.5rem;
-            max-width: 720px;
-            width: 100%;
-            padding: 2rem;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
-            animation: floatIn 0.4s ease-out;
-        }
-
-        .success-chip {
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #2d5016, #78a15b);
-            color: white;
-            box-shadow: 0 15px 30px rgba(45, 80, 22, 0.2);
-        }
-
-        .success-chip svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .success-modal h2 {
-            text-align: center;
-            color: #1f3f10;
-            margin-bottom: 0.35rem;
-        }
-
-        .success-modal p.subheadline {
-            text-align: center;
-            color: #55603b;
-            margin-bottom: 1.5rem;
-        }
-
-        .success-details {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .success-summary {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1rem 0 1.5rem;
-        }
-
-        .success-card {
-            background: #f8faf4;
-            padding: 1rem;
-            border-radius: 1rem;
-            border: 1px solid #e2e8d2;
-        }
-
-        .success-card h3 {
-            margin: 0 0 0.75rem;
-            color: #2d5016;
-            font-size: 1rem;
-        }
-
-        .success-card p,
-        .success-card li {
-            margin: 0.35rem 0;
-            color: #404b2d;
-            line-height: 1.5;
-        }
-
-        .success-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .success-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.25rem;
-        }
-
-        .success-actions .button {
-            min-width: 180px;
-            padding: 0.95rem 1.2rem;
-            border-radius: 999px;
-            font-weight: 700;
-        }
-
-        .success-actions .button.secondary {
-            background: #f3f4f1;
-            color: #2d5016;
-            border: 1px solid transparent;
-        }
-
-        .success-actions .button.secondary:hover {
-            background: #e7ebde;
-        }
-
-        @keyframes floatIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .button.primary {
@@ -536,9 +389,9 @@
 <nav id="nav">
     <ul class="links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="index.html#productos">Productos</a></li>
-        <li class="active"><a href="carrito.html">Carrito</a></li>
+        <li><a href="index.html#productos">Catálogo</a></li>
         <li><a href="index.html#citas">Citas</a></li>
+        <li class="active"><a href="carrito.html">Carrito</a></li>
         <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
         <li id="area-cuenta" style="display:none;">
             <span id="nombre-usuario"></span>
@@ -623,44 +476,6 @@
                 <div class="card-field">
                     <label for="card-cvv">CVV</label>
                     <input type="text" id="card-cvv" placeholder="123" maxlength="4" />
-                </div>
-                <div class="checkbox-field">
-                    <input type="checkbox" id="save-card">
-                    <label for="save-card" class="checkbox-label">Guardar esta tarjeta para futuros pagos</label>
-                </div>
-            </div>
-
-            <div id="saved-cards" class="card-details" aria-hidden="true" style="display: none;">
-                <h3>Mis tarjetas guardadas</h3>
-                <div id="saved-cards-list"></div>
-                <p style="color: #666; font-size: 0.95rem; margin-top: 1rem;">o usar una nueva tarjeta</p>
-            </div>
-
-            <div id="paypal-details" class="card-details" aria-hidden="true">
-                <h3>Datos de tu cuenta PayPal</h3>
-                <div class="card-field">
-                    <label for="paypal-name">Nombre completo</label>
-                    <input type="text" id="paypal-name" placeholder="Nombre completo" />
-                </div>
-                <div class="card-field">
-                    <label for="paypal-email">Email de PayPal</label>
-                    <input type="email" id="paypal-email" placeholder="tu@paypal.com" />
-                </div>
-            </div>
-
-            <div id="mercadopago-details" class="card-details" aria-hidden="true">
-                <h3>Datos para Mercado Pago</h3>
-                <div class="card-field">
-                    <label for="mercadopago-name">Nombre completo</label>
-                    <input type="text" id="mercadopago-name" placeholder="Nombre completo" />
-                </div>
-                <div class="card-field">
-                    <label for="mercadopago-email">Email de Mercado Pago</label>
-                    <input type="email" id="mercadopago-email" placeholder="tu@mercadopago.com" />
-                </div>
-                <div class="card-field">
-                    <label for="mercadopago-phone">Teléfono</label>
-                    <input type="tel" id="mercadopago-phone" placeholder="5512345678" maxlength="15" />
                 </div>
             </div>
 
@@ -769,56 +584,10 @@
     </div>
 </div>
 
-<div id="success-modal" class="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
-    <div class="success-modal-content">
-        <div class="success-chip">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" stroke="white" stroke-width="3" />
-                <path d="M16 24l6 6 10-14" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </div>
-        <h2 id="success-modal-title">Compra confirmada</h2>
-        <p class="subheadline">Gracias por tu pedido en AgroVet. Tu compra ya está registrada y pronto la procesaremos.</p>
-
-        <div class="success-details">
-            <div class="success-card">
-                <h3>Número de pedido</h3>
-                <p id="success-order-id">#000000</p>
-                <h3>Fecha</h3>
-                <p id="success-order-date">--/--/----</p>
-                <h3>Estado</h3>
-                <p id="success-order-status">Pendiente</p>
-            </div>
-            <div class="success-card">
-                <h3>Método de pago</h3>
-                <p id="success-payment-method">--</p>
-                <h3>Total</h3>
-                <p id="success-order-total">$0</p>
-            </div>
-        </div>
-
-        <div class="success-card">
-            <h3>Dirección de envío</h3>
-            <p id="success-address">No disponible</p>
-        </div>
-
-        <div class="success-card">
-            <h3>Productos comprados</h3>
-            <ul id="success-products-list"></ul>
-        </div>
-
-        <div class="success-actions">
-            <button type="button" class="button primary" onclick="volverAlInicio()">Volver al inicio</button>
-            <button type="button" class="button secondary" onclick="descargarTicket()">Descargar ticket</button>
-        </div>
-    </div>
-</div>
-
 </div>
 
 <script type="module">
-    import { cargarCarritoLocal, actualizarCarritoUI, guardarCompra, verificarAutenticacion, cerrarSesion, obtenerResumenCarrito, validarEnvio, actualizarResumenDireccion, auth, db } from './carrito.js';
-    import { getDoc, doc as docRef, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+    import { cargarCarritoLocal, actualizarCarritoUI, guardarCompra, verificarAutenticacion, cerrarSesion, obtenerResumenCarrito, validarEnvio, actualizarResumenDireccion } from './carrito.js';
     
     const paymentMethods = document.querySelectorAll('.payment-card');
     const subtotalEl = document.getElementById('summary-subtotal');
@@ -891,20 +660,6 @@
         cardDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
     }
 
-    function mostrarPayPalDetails(show) {
-        const paypalDetails = document.getElementById('paypal-details');
-        if (!paypalDetails) return;
-        paypalDetails.classList.toggle('active', show);
-        paypalDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
-    }
-
-    function mostrarMercadoPagoDetails(show) {
-        const mpDetails = document.getElementById('mercadopago-details');
-        if (!mpDetails) return;
-        mpDetails.classList.toggle('active', show);
-        mpDetails.setAttribute('aria-hidden', show ? 'false' : 'true');
-    }
-
     function validarTarjeta() {
         const cardDetails = document.getElementById('card-details');
         if (!cardDetails.classList.contains('active')) return true;
@@ -938,55 +693,6 @@
         return true;
     }
 
-    function validarPayPal() {
-        const paypalDetails = document.getElementById('paypal-details');
-        if (!paypalDetails.classList.contains('active')) return true;
-
-        const nombre = document.getElementById('paypal-name').value.trim();
-        const email = document.getElementById('paypal-email').value.trim();
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!nombre || !email) {
-            errorEl.textContent = 'Completa todos los datos de PayPal.';
-            errorEl.style.display = 'block';
-            return false;
-        }
-        if (!emailPattern.test(email)) {
-            errorEl.textContent = 'Ingresa un email válido para PayPal.';
-            errorEl.style.display = 'block';
-            return false;
-        }
-        return true;
-    }
-
-    function validarMercadoPago() {
-        const mpDetails = document.getElementById('mercadopago-details');
-        if (!mpDetails.classList.contains('active')) return true;
-
-        const nombre = document.getElementById('mercadopago-name').value.trim();
-        const email = document.getElementById('mercadopago-email').value.trim();
-        const telefono = document.getElementById('mercadopago-phone').value.trim();
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phonePattern = /^[0-9]{8,15}$/;
-
-        if (!nombre || !email || !telefono) {
-            errorEl.textContent = 'Completa todos los datos para Mercado Pago.';
-            errorEl.style.display = 'block';
-            return false;
-        }
-        if (!emailPattern.test(email)) {
-            errorEl.textContent = 'Ingresa un email válido para Mercado Pago.';
-            errorEl.style.display = 'block';
-            return false;
-        }
-        if (!phonePattern.test(telefono)) {
-            errorEl.textContent = 'Ingresa un teléfono válido (8-15 dígitos).';
-            errorEl.style.display = 'block';
-            return false;
-        }
-        return true;
-    }
-
     function seleccionarMetodo(paymentCard) {
         paymentMethods.forEach(card => card.classList.remove('active'));
         paymentCard.classList.add('active');
@@ -1012,10 +718,7 @@
         card.addEventListener('click', () => {
             seleccionarMetodo(card);
             resetErrors();
-            const method = card.dataset.method;
-            mostrarCardDetails(method === 'card');
-            mostrarPayPalDetails(method === 'paypal');
-            mostrarMercadoPagoDetails(method === 'mercadopago');
+            mostrarCardDetails(card.dataset.method === 'card');
         });
     });
 
@@ -1032,12 +735,6 @@
             return false;
         }
         if (metodoSeleccionado.value === 'Tarjeta de crédito/débito' && !validarTarjeta()) {
-            return false;
-        }
-        if (metodoSeleccionado.value === 'PayPal' && !validarPayPal()) {
-            return false;
-        }
-        if (metodoSeleccionado.value === 'Mercado Pago' && !validarMercadoPago()) {
             return false;
         }
         if (!validarEnvio()) {
@@ -1083,218 +780,12 @@
         }
     }
 
-    function formatearFechaLocal(isoFecha) {
-        const fecha = new Date(isoFecha);
-        return fecha.toLocaleDateString('es-MX', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }) + ' • ' + fecha.toLocaleTimeString('es-MX', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-
-    function mostrarModalCompraExitosa(compra) {
-        const modal = document.getElementById('success-modal');
-        const productsList = document.getElementById('success-products-list');
-        const orderIdEl = document.getElementById('success-order-id');
-        const dateEl = document.getElementById('success-order-date');
-        const statusEl = document.getElementById('success-order-status');
-        const paymentMethodEl = document.getElementById('success-payment-method');
-        const totalEl = document.getElementById('success-order-total');
-        const addressEl = document.getElementById('success-address');
-
-        if (!modal || !productsList || !orderIdEl || !dateEl || !statusEl || !paymentMethodEl || !totalEl || !addressEl) return;
-
-        orderIdEl.textContent = compra.idPedido || 'N/A';
-        dateEl.textContent = formatearFechaLocal(compra.fecha);
-        statusEl.textContent = compra.estado ? compra.estado.charAt(0).toUpperCase() + compra.estado.slice(1) : 'Pendiente';
-        paymentMethodEl.textContent = compra.metodoPago || 'No especificado';
-        totalEl.textContent = `$${compra.total}`;
-        addressEl.textContent = compra.direccionResumen || 'No hay dirección registrada.';
-
-        productsList.innerHTML = compra.productos.map(item =>
-            `<li>${item.nombre} x${item.cantidad} — $${item.precio * item.cantidad}</li>`
-        ).join('');
-
-        modal.classList.add('active');
-        window.currentCompra = compra;
-    }
-
-    function ocultarModalCompraExitosa() {
-        const modal = document.getElementById('success-modal');
-        if (!modal) return;
-        modal.classList.remove('active');
-    }
-
-    function descargarTicket() {
-        const compra = window.currentCompra;
-        if (!compra) return;
-
-        const lines = [];
-        lines.push('AgroVet - Ticket de compra');
-        lines.push('--------------------------------------');
-        lines.push(`Pedido: ${compra.idPedido}`);
-        lines.push(`Fecha: ${formatearFechaLocal(compra.fecha)}`);
-        lines.push(`Estado: ${compra.estado}`);
-        lines.push(`Método de pago: ${compra.metodoPago}`);
-        lines.push('');
-        lines.push('Productos:');
-        compra.productos.forEach(item => {
-            lines.push(`- ${item.nombre} x${item.cantidad} — $${item.precio * item.cantidad}`);
-        });
-        lines.push('');
-        lines.push(`Total: $${compra.total}`);
-        lines.push('');
-        lines.push('Dirección de envío:');
-        lines.push(compra.direccionResumen || 'No disponible');
-        lines.push('');
-        lines.push('Gracias por comprar en AgroVet.');
-
-        const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `ticket_agrovet_${compra.idPedido || Date.now()}.txt`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-    }
-
-    window.mostrarModalCompraExitosa = mostrarModalCompraExitosa;
-    window.ocultarModalCompraExitosa = ocultarModalCompraExitosa;
-    window.descargarTicket = descargarTicket;
-
-    function obtenerDatosMetodoPago() {
-        const metodo = document.querySelector('input[name="payment"]:checked')?.value || '';
-        let datos = { metodo: metodo };
-
-        if (metodo === 'Tarjeta de crédito/débito') {
-            datos.titular = document.getElementById('cardholder-name')?.value || '';
-            datos.tipo = document.getElementById('card-brand')?.value || '';
-            datos.numero = document.getElementById('card-number')?.value || '';
-        } else if (metodo === 'PayPal') {
-            datos.nombre = document.getElementById('paypal-name')?.value || '';
-            datos.email = document.getElementById('paypal-email')?.value || '';
-        } else if (metodo === 'Mercado Pago') {
-            datos.nombre = document.getElementById('mercadopago-name')?.value || '';
-            datos.email = document.getElementById('mercadopago-email')?.value || '';
-            datos.telefono = document.getElementById('mercadopago-phone')?.value || '';
-        }
-        return datos;
-    }
-
-    window.obtenerDatosMetodoPago = obtenerDatosMetodoPago;
-
-    let tarjetasGuardadas = [];
-    let tarjetaSeleccionada = null;
-
-    async function cargarTarjetasGuardadas() {
-        if (typeof verificarAutenticacion === 'undefined') return;
-        const user = auth?.currentUser;
-        if (!user) return;
-        
-        try {
-            const userDocRef = docRef(db, 'users', user.uid);
-            const userDoc = await getDoc(userDocRef);
-            tarjetasGuardadas = userDoc.data()?.tarjetasGuardadas || [];
-            mostrarTarjetasGuardadas();
-        } catch (error) {
-            console.error('Error cargando tarjetas guardadas:', error);
-        }
-    }
-
-    function mostrarTarjetasGuardadas() {
-        const savedCardsList = document.getElementById('saved-cards-list');
-        const savedCardsSection = document.getElementById('saved-cards');
-        if (!savedCardsList || !savedCardsSection) return;
-
-        if (tarjetasGuardadas.length === 0) {
-            savedCardsSection.style.display = 'none';
-            return;
-        }
-
-        savedCardsSection.style.display = 'block';
-        savedCardsList.innerHTML = tarjetasGuardadas.map((tarjeta, index) => `
-            <div class="saved-card-item ${tarjetaSeleccionada === index ? 'active' : ''}" onclick="usarTarjetaGuardada(${index})">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <strong>${tarjeta.tipo}</strong> • ${tarjeta.numero.slice(-4).padStart(tarjeta.numero.length, '•')}
-                        <br><small style="color: #666;">${tarjeta.titular}</small>
-                    </div>
-                    <div style="text-align: right; font-size: 0.9rem; color: #999;">
-                        Vence: ${tarjeta.vencimiento}
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    window.usarTarjetaGuardada = function(index) {
-        tarjetaSeleccionada = tarjetaSeleccionada === index ? null : index;
-        if (tarjetaSeleccionada !== null) {
-            const tarjeta = tarjetasGuardadas[tarjetaSeleccionada];
-            document.getElementById('cardholder-name').value = tarjeta.titular;
-            document.getElementById('card-brand').value = tarjeta.tipo;
-            document.getElementById('card-number').value = tarjeta.numero;
-            document.getElementById('card-expiration').value = tarjeta.vencimiento;
-            document.getElementById('card-cvv').value = '';
-        } else {
-            document.getElementById('cardholder-name').value = '';
-            document.getElementById('card-brand').value = '';
-            document.getElementById('card-number').value = '';
-            document.getElementById('card-expiration').value = '';
-            document.getElementById('card-cvv').value = '';
-        }
-        mostrarTarjetasGuardadas();
-    };
-
-    async function guardarTarjeta() {
-        const user = auth?.currentUser;
-        if (!user) return;
-
-        const checkGuardarTarjeta = document.getElementById('save-card');
-        if (!checkGuardarTarjeta || !checkGuardarTarjeta.checked) return;
-
-        const tarjeta = {
-            titular: document.getElementById('cardholder-name').value,
-            tipo: document.getElementById('card-brand').value,
-            numero: document.getElementById('card-number').value.replace(/\s+/g, ''),
-            vencimiento: document.getElementById('card-expiration').value,
-            fechaGuardado: new Date().toISOString()
-        };
-
-        try {
-            const userDocRef = docRef(db, 'users', user.uid);
-            const userDoc = await getDoc(userDocRef);
-            const tarjetasExistentes = userDoc.data()?.tarjetasGuardadas || [];
-            
-            if (tarjetasExistentes.length < 3) {
-                tarjetasExistentes.push(tarjeta);
-                await setDoc(userDocRef, { tarjetasGuardadas: tarjetasExistentes }, { merge: true });
-                tarjetasGuardadas = tarjetasExistentes;
-                mostrarTarjetasGuardadas();
-            }
-        } catch (error) {
-            console.error('Error guardando tarjeta:', error);
-        }
-    }
-
-    window.guardarTarjeta = guardarTarjeta;
-
-    function volverAlInicio() {
-        window.location.href = 'index.html';
-    }
-
     cargarCarritoLocal();
     actualizarCarritoUI();
     verificarAutenticacion();
     seleccionarMetodoPorDefecto();
     actualizarResumenCompra();
     actualizarResumenDireccion();
-    setTimeout(cargarTarjetasGuardadas, 500);
     window.cerrarSesion = cerrarSesion;
 </script>
 
