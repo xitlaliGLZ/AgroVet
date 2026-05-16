@@ -30,6 +30,7 @@
 							<li><a href="index.html#productos">Catálogo</a></li>
 							<li><a href="index.html#citas">Citas</a></li>
 							<li><a href="#ventas">Ventas</a></li>
+                            <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
 						</ul>
 						<ul class="icons">
 							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
@@ -141,4 +142,58 @@
 			<script src="assets/js/main.js"></script>
 			<script type="module" src="carrito.js"></script>
 	</body>
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+    import { logout } from './carrito.js';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+        authDomain: "agrovet-edb35.firebaseapp.com",
+        projectId: "agrovet-edb35",
+        storageBucket: "agrovet-edb35.firebasestorage.app",
+        messagingSenderId: "549615594048",
+        appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+        measurementId: "G-5YFZVDHHRX"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    window.logout = logout;
+
+    const ADMIN_EMAILS = [
+        'xitlaliglz@gmail.com',
+        'correo_de_aylin@gmail.com',
+        'correo_de_emmanuel@gmail.com'
+    ];
+
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const userEmail = user.email?.toLowerCase();
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        let rol = userDoc.exists() ? userDoc.data()?.rol : null;
+
+        if (!rol) {
+            rol = ADMIN_EMAILS.includes(userEmail) ? 'admin' : 'cliente';
+            await setDoc(doc(db, 'users', user.uid), {
+                name: user.displayName || '',
+                email: user.email,
+                rol,
+                fechaRegistro: new Date().toISOString()
+            }, { merge: true });
+        }
+
+        if (rol !== 'admin') {
+            alert('No tienes acceso');
+            window.location.href = 'index.html';
+            return;
+        }
+    });
+</script>
 </html>

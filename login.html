@@ -115,7 +115,7 @@
     </style>
     <!-- Firebase SDK -->    <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
         import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
         import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js';
 
@@ -136,15 +136,117 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
+        const ADMIN_EMAILS = [
+            'xitlaliglz@gmail.com',
+            'correo_de_aylin@gmail.com',
+            'correo_de_emmanuel@gmail.com'
+        ];
+
         window.auth = auth;
         window.db = db;
         window.provider = provider;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.signInWithPopup = signInWithPopup;
-        window.signOut = signOut;
-        window.doc = doc;
-        window.setDoc = setDoc;
+
+        window.loginWithGoogle = async function () {
+            const messageEl = document.getElementById('login-message');
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                const email = user.email?.toLowerCase() || '';
+                const isAdmin = ADMIN_EMAILS.includes(email);
+                const rol = isAdmin ? 'admin' : 'cliente';
+                const nombre = user.displayName || email.split('@')[0] || '';
+
+                await setDoc(doc(db, 'users', user.uid), {
+                    name: nombre,
+                    email: user.email,
+                    rol,
+                    fechaRegistro: new Date().toISOString()
+                }, { merge: true });
+
+                if (messageEl) {
+                    messageEl.textContent = 'Inicio de sesión con Google exitoso';
+                }
+
+                window.location.href = isAdmin ? 'admin.html' : 'index.html';
+            } catch (error) {
+                if (messageEl) {
+                    messageEl.textContent = 'Error: ' + error.message;
+                }
+            }
+        };
+
+        function isGmailAddress(email) {
+            return /^[^\s@]+@gmail\.com$/i.test(email);
+        }
+
+        async function ensureUserRecord(user, rol = 'cliente') {
+            const userDocRef = doc(db, 'users', user.uid);
+            await setDoc(userDocRef, {
+                name: user.displayName || user.email?.split('@')[0] || '',
+                email: user.email,
+                rol,
+                fechaRegistro: new Date().toISOString()
+            }, { merge: true });
+        }
+
+        window.loginWithEmail = async function () {
+            const messageEl = document.getElementById('login-message');
+            const email = document.getElementById('email-input').value.trim();
+            const password = document.getElementById('password-input').value;
+
+            if (!email || !password) {
+                if (messageEl) messageEl.textContent = 'Ingresa correo y contraseña para continuar.';
+                return;
+            }
+
+            if (!isGmailAddress(email)) {
+                if (messageEl) messageEl.textContent = 'Solo se permiten correos Gmail para iniciar sesión.';
+                return;
+            }
+
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, password);
+                if (!result.user.emailVerified) {
+                    await signOut(auth);
+                    if (messageEl) messageEl.textContent = 'Tu Gmail debe estar verificado antes de iniciar sesión. Revisa tu correo y confirma el enlace.';
+                    return;
+                }
+                await ensureUserRecord(result.user, 'cliente');
+                if (messageEl) messageEl.textContent = 'Inicio de sesión exitoso';
+                window.location.href = 'index.html';
+            } catch (error) {
+                if (messageEl) {
+                    messageEl.textContent = 'Error: ' + error.message;
+                }
+            }
+        };
+
+        window.registerWithEmail = async function () {
+            const messageEl = document.getElementById('login-message');
+            const email = document.getElementById('email-input').value.trim();
+            const password = document.getElementById('password-input').value;
+
+            if (!email || !password) {
+                if (messageEl) messageEl.textContent = 'Ingresa correo y contraseña para registrarte.';
+                return;
+            }
+
+            if (!isGmailAddress(email)) {
+                if (messageEl) messageEl.textContent = 'Solo se permiten correos Gmail para registrarse.';
+                return;
+            }
+
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                await ensureUserRecord(result.user, 'cliente');
+                await sendEmailVerification(result.user);
+                if (messageEl) messageEl.textContent = 'Cuenta creada. Revisa tu Gmail y verifica tu correo antes de iniciar sesión.';
+            } catch (error) {
+                if (messageEl) {
+                    messageEl.textContent = 'Error: ' + error.message;
+                }
+            }
+        };
     </script>
 </head>
 
@@ -158,149 +260,68 @@
 
 <nav id="nav">
     <ul class="links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="index.html#productos">Catálogo</a></li>
-        <li><a href="index.html#citas">Citas</a></li>
-        <li><a href="carrito.html">Carrito</a></li>
         <li id="area-login" class="active"><a href="login.html">Iniciar sesión</a></li>
-        <li id="area-cuenta" style="display:none;">
-            <span id="nombre-usuario"></span>
-            <a href="#" onclick="logout()">Cerrar sesión</a>
-        </li>
     </ul>
 </nav>
 
 <div id="main">
 
-<section class="post">
-<header class="major">
-    <h1>🔐 Iniciar Sesión en AgroVet</h1>
-    <p>Accede a tu cuenta para comprar medicamentos y agendar consultas veterinarias</p>
-</header>
+<section class="post featured">
+    <header class="major">
+        <span class="date">🐄 Ganadería</span>
+        <h2>Salud y productividad de tu ganado</h2>
+        <p>Medicamentos, suplementos y asesoría veterinaria para mantener tu rebaño saludable y productivo.</p>
+    </header>
+    <a href="#" class="image main"><img src="images/fondo.png" alt="Ganado saludable" /></a>
 
-<div class="field">
-    <label>Correo electrónico</label>
-    <input type="email" id="login-email" placeholder="tu@email.com" required>
-</div>
+    <section class="post" style="margin-top:2rem; padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.95);">
+        <header class="major">
+            <h2>Inicia con tu Gmail y contraseña</h2>
+            <p>Utiliza tu email y contraseña manualmente para entrar o crear una cuenta nueva.</p>
+        </header>
+        <div class="fields">
+            <div class="field half">
+                <label for="email-input">Correo electrónico</label>
+                <input type="email" id="email-input" placeholder="tuemail@gmail.com" />
+            </div>
+            <div class="field half">
+                <label for="password-input">Contraseña</label>
+                <input type="password" id="password-input" placeholder="Contraseña" />
+            </div>
+        </div>
+        <div class="actions special" style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+            <button type="button" onclick="loginWithEmail()" class="button">Iniciar sesión</button>
+            <button type="button" onclick="registerWithEmail()" class="button alt">Registrarse</button>
+        </div>
+    </section>
 
-<div class="field">
-    <label>Contraseña</label>
-    <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required>
-</div>
-
-<ul class="actions">
-    <li><input type="button" value="Iniciar Sesión" onclick="login()"></li>
-</ul>
-
-<p style="text-align: center; color: #555; margin: 10px 0;">o</p>
-
-<button onclick="loginWithGoogle()">🔗 Continuar con Google</button>
-
-<p id="login-message"></p>
-
+    <div class="actions special" style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:2rem;">
+        <button type="button" onclick="loginWithGoogle()" class="button large">🔗 Continuar con Google</button>
+    </div>
 </section>
 
-<section class="post">
-<header class="major">
-    <h1>📝 Crear Cuenta en AgroVet</h1>
-    <p>Regístrate para acceder a todos nuestros servicios de medicina veterinaria</p>
-</header>
-
-<div class="field">
-    <label>Nombre completo</label>
-    <input type="text" id="register-name" placeholder="Tu nombre" required>
-</div>
-
-<div class="field">
-    <label>Correo electrónico</label>
-    <input type="email" id="register-email" placeholder="tu@email.com" required>
-</div>
-
-<div class="field">
-    <label>Contraseña</label>
-    <input type="password" id="register-password" placeholder="Crea una contraseña segura" required>
-</div>
-
-<div class="field">
-    <label>Tipo de cuenta</label>
-    <select id="register-role" required>
-        <option value="cliente">Cliente (Comprar productos)</option>
-        <option value="admin">Administrador (Gestionar sistema)</option>
-    </select>
-</div>
-
-<ul class="actions">
-    <li><input type="button" value="Crear Cuenta" onclick="register()"></li>
-</ul>
-
-<p id="register-message"></p>
-
+<section class="posts">
+    <article>
+        <header>
+            <span class="date">🐕 Mascotas Felices</span>
+            <h2>Cuida a tu perro o gato con productos confiables</h2>
+        </header>
+        <p>Descubre los mejores alimentos, vacunas y accesorios para mantener su salud y bienestar.</p>
+    </article>
+    <article>
+        <header>
+            <span class="date">🐄 Ganadería</span>
+            <h2>Todo lo necesario para tu rebaño</h2>
+        </header>
+        <p>Soluciones especializadas en veterinaria y nutrición para aumentar productividad y salud animal.</p>
+    </article>
 </section>
 
-</div>
+<p id="login-message" style="text-align:center; margin-top:1.5rem; color:#2d5016; font-weight:bold;"></p>
 
 </div>
 
-<script>
-async function login() {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    try {
-        await signInWithEmailAndPassword(window.auth, email, password);
-        document.getElementById('login-message').innerText = 'Inicio de sesión exitoso';
-        window.location.href = 'index.html';
-    } catch (error) {
-        document.getElementById('login-message').innerText = 'Error: ' + error.message;
-    }
-}
-
-async function register() {
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const role = document.getElementById('register-role').value;
-    
-    try {
-        const userCredential = await createUserWithEmailAndPassword(window.auth, email, password);
-        const user = userCredential.user;
-        // Save additional data to Firestore
-        await setDoc(doc(window.db, 'users', user.uid), {
-            name: name,
-            email: email,
-            rol: role,
-            fechaRegistro: new Date().toISOString()
-        });
-        document.getElementById('register-message').innerText = 'Registro exitoso';
-        
-        // Redirigir según el rol
-        setTimeout(() => {
-            if (role === 'admin') {
-                window.location.href = 'admin.html';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }, 1000);
-    } catch (error) {
-        document.getElementById('register-message').innerText = 'Error: ' + error.message;
-    }
-}
-
-async function loginWithGoogle() {
-    try {
-        const result = await signInWithPopup(window.auth, window.provider);
-        const user = result.user;
-        // Save or update user data in Firestore
-        await setDoc(doc(window.db, 'users', user.uid), {
-            name: user.displayName,
-            email: user.email
-        }, { merge: true });
-        document.getElementById('login-message').innerText = 'Inicio con Google exitoso';
-        window.location.href = 'index.html';
-    } catch (error) {
-        document.getElementById('login-message').innerText = 'Error: ' + error.message;
-    }
-}
-</script>
+</div>
 
 <script type="module">
     import { verificarAutenticacion, logout } from './carrito.js';

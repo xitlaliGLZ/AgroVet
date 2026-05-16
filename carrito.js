@@ -273,6 +273,18 @@ export async function guardarCita(nombre, animal, fecha, hora) {
         }
         
         try {
+            const citaQuery = query(
+                collection(db, 'citas'),
+                where('fecha', '==', fecha),
+                where('hora', '==', hora)
+            );
+            const citaSnapshot = await getDocs(citaQuery);
+
+            if (!citaSnapshot.empty) {
+                mostrarNotificacion('Ya hay una cita registrada para ese día y hora. Por favor elige otra hora o día.', 'error');
+                return;
+            }
+
             const cita = {
                 usuarioId: user.uid,
                 usuario: user.email,
@@ -285,10 +297,10 @@ export async function guardarCita(nombre, animal, fecha, hora) {
             };
             
             await setDoc(doc(db, 'citas', user.uid + '_' + Date.now()), cita);
-            alert('Cita agendada exitosamente');
+            mostrarNotificacion('Cita agendada exitosamente');
             limpiarFormularioCita();
         } catch (error) {
-            alert('Error al guardar cita: ' + error.message);
+            mostrarNotificacion('Error al guardar cita: ' + error.message, 'error');
         }
     });
 }
@@ -300,14 +312,15 @@ function limpiarFormularioCita() {
 }
 
 // Mostrar notificación
-function mostrarNotificacion(mensaje) {
+function mostrarNotificacion(mensaje, tipo = 'success') {
     const notif = document.createElement('div');
     notif.textContent = mensaje;
+    const color = tipo === 'error' ? '#e74c3c' : '#4CAF50';
     notif.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        background: #4CAF50;
+        background: ${color};
         color: white;
         padding: 15px 20px;
         border-radius: 5px;
@@ -316,13 +329,22 @@ function mostrarNotificacion(mensaje) {
     `;
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 3000);
+
+    const citaMensaje = document.getElementById('cita-mensaje');
+    if (citaMensaje) {
+        citaMensaje.textContent = mensaje;
+        citaMensaje.style.color = tipo === 'error' ? '#e74c3c' : '#2e7d32';
+        citaMensaje.style.fontWeight = 'bold';
+        citaMensaje.style.marginTop = '10px';
+    }
 }
 
 // Cerrar sesión
 export function cerrarSesion() {
     signOut(auth).then(() => {
         alert('Sesión cerrada');
-        window.location.href = 'index.html';
+        localStorage.removeItem('carrito');
+        window.location.href = 'login.html';
     }).catch((error) => {
         alert('Error al cerrar sesión: ' + error.message);
     });
@@ -396,6 +418,12 @@ export function verificarAutenticacion() {
             if (introNote) {
                 introNote.style.display = 'block';
             }
+
+            if (!window.location.pathname.includes('login.html')) {
+                localStorage.removeItem('carrito');
+                window.location.href = 'login.html';
+                return;
+            }
         }
     });
 }
@@ -464,7 +492,8 @@ export async function cargarCitas() {
 export async function logout() {
     try {
         await signOut(auth);
-        window.location.href = 'index.html';
+        localStorage.removeItem('carrito');
+        window.location.href = 'login.html';
     } catch (error) {
         console.error('Error al cerrar sesión:', error);
     }

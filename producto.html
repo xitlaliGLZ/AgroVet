@@ -40,7 +40,7 @@
         .product-panel {
             display: grid;
             gap: 2rem;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 2.2fr 1fr;
             align-items: start;
             margin-bottom: 2rem;
         }
@@ -57,31 +57,6 @@
         }
 
         .product-gallery .main-image img {
-            width: 100%;
-            display: block;
-        }
-
-        .gallery-thumbs {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.8rem;
-        }
-
-        .gallery-thumbs button {
-            border: 2px solid transparent;
-            background: #fff;
-            border-radius: 0.85rem;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
-
-        .gallery-thumbs button.active,
-        .gallery-thumbs button:hover {
-            border-color: var(--color-accent);
-        }
-
-        .gallery-thumbs img {
             width: 100%;
             display: block;
         }
@@ -167,8 +142,9 @@
                 <li><a href="index.html#productos">Catálogo</a></li>
                 <li><a href="index.html#citas">Citas</a></li>
                 <li><a href="carrito.html">Carrito <span id="carrito-badge">0</span></a></li>
+                <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
                 <li id="area-login"><a href="login.html">Iniciar sesión</a></li>
-                <li id="area-cuenta" style="display:none;"><span id="nombre-usuario"></span><a href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                <li id="area-cuenta" style="display:none;"><span id="nombre-usuario"></span><a href="#" onclick="logout()">Cerrar sesión</a></li>
             </ul>
             <ul class="icons">
                 <li><a href="#" class="icon brands fa-facebook-f"></a></li>
@@ -189,7 +165,6 @@
                         <div class="main-image">
                             <img id="producto-imagen" src="images/pic01.jpg" alt="Imagen del producto" />
                         </div>
-                        <div class="gallery-thumbs" id="gallery-thumbs"></div>
                     </div>
 
                     <div class="product-info">
@@ -321,7 +296,6 @@
         const especificacionesEl = document.getElementById('producto-especificaciones');
         const stockEl = document.getElementById('producto-stock');
         const imagenEl = document.getElementById('producto-imagen');
-        const galleryEl = document.getElementById('gallery-thumbs');
         const btnCarrito = document.getElementById('btn-carrito');
         const btnComprar = document.getElementById('btn-comprar');
 
@@ -336,7 +310,6 @@
             precioEl.textContent = '';
             descripcionEl.textContent = 'No se encontró información para el producto solicitado. Regresa al catálogo para elegir otro producto.';
             stockEl.textContent = '';
-            galleryEl.innerHTML = '';
         }
 
         function actualizarImagen(src) {
@@ -361,20 +334,6 @@
                 const li = document.createElement('li');
                 li.textContent = item;
                 especificacionesEl.appendChild(li);
-            });
-
-            galleryEl.innerHTML = '';
-            producto.galeria.forEach((imgSrc, index) => {
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.addEventListener('click', () => {
-                    actualizarImagen(imgSrc);
-                    galleryEl.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-                if (index === 0) button.classList.add('active');
-                button.innerHTML = `<img src="${imgSrc}" alt="Galería ${producto.nombre} ${index + 1}" />`;
-                galleryEl.appendChild(button);
             });
 
             btnCarrito.addEventListener('click', () => {
