@@ -1,11 +1,15 @@
+# admin.html completo con gestión de productos, usuarios, pedidos y pagos
+
+```html
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Panel de Administración - Veterinaria</title>
+    <title>Panel de Administración - AgroVet</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="assets/css/main.css" />
+
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
@@ -13,380 +17,503 @@
 
 <body class="is-preload">
 
-    <!-- Wrapper -->
-    <div id="wrapper" class="fade-in">
-
-        <!-- Intro -->
-        <div id="intro">
-            <h1>Panel de Administración</h1>
-            <p>Bienvenido al panel de administración de la veterinaria</p>
-
-            <ul class="actions">
-                <li>
-                    <a href="#ventas" class="button icon solid solo fa-arrow-down scrolly">
-                        Ver Ventas
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#citas" class="button icon solid solo fa-arrow-down scrolly">
-                        Ver Citas
-                    </a>
-                </li>
-
-                <li>
-                    <button onclick="logout()" class="button">
-                        Cerrar Sesión
-                    </button>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-
-            <ul class="links">
-                <li class="active">
-                    <a href="index.html">Inicio</a>
-                </li>
-
-                <li>
-                    <a href="index.html#productos">Catálogo</a>
-                </li>
-
-                <li>
-                    <a href="index.html#citas">Citas</a>
-                </li>
-
-                <li>
-                    <a href="#ventas">Ventas</a>
-                </li>
-
-                <li>
-                    <a href="#" onclick="logout()">Cerrar sesión</a>
-                </li>
-            </ul>
-
-            <ul class="icons">
-                <li>
-                    <a href="#" class="icon brands fa-twitter">
-                        <span class="label">Twitter</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="icon brands fa-facebook-f">
-                        <span class="label">Facebook</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="icon brands fa-instagram">
-                        <span class="label">Instagram</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="icon brands fa-github">
-                        <span class="label">GitHub</span>
-                    </a>
-                </li>
-            </ul>
-
-        </nav>
-
-        <!-- Main -->
-        <div id="main">
-
-            <!-- Encabezado -->
-            <article class="post featured">
-                <header class="major">
-                    <span class="date">Panel de Administración</span>
-
-                    <h2>
-                        Gestión de Ventas y Citas
-                    </h2>
-
-                    <p>
-                        Administra las ventas realizadas y las citas programadas
-                        en la veterinaria.
-                    </p>
-                </header>
-            </article>
-
-            <!-- Secciones -->
-            <section class="posts">
-
-                <!-- Ventas -->
-                <article id="ventas">
-
-                    <header>
-                        <span class="date">Ventas</span>
-
-                        <h2>
-                            <a href="#">Historial de Ventas</a>
-                        </h2>
-                    </header>
-
-                    <div id="ventas-list">
-                        <!-- Las ventas se cargarán aquí -->
-                    </div>
-
-                </article>
-
-                <!-- Citas -->
-                <article id="citas">
-
-                    <header>
-                        <span class="date">Citas</span>
-
-                        <h2>
-                            <a href="#">Citas Programadas</a>
-                        </h2>
-                    </header>
-
-                    <div id="citas-list">
-                        <!-- Las citas se cargarán aquí -->
-                    </div>
-
-                </article>
-
-            </section>
-
-        </div>
-
-        <!-- Footer -->
-        <footer id="footer">
-
-            <section>
-
-                <form method="post" action="#">
-
-                    <div class="fields">
-
-                        <div class="field">
-                            <label for="name">Name</label>
-
-                            <input type="text" name="name" id="name" />
-                        </div>
-
-                        <div class="field">
-                            <label for="email">Email</label>
-
-                            <input type="email" name="email" id="email" />
-                        </div>
-
-                        <div class="field">
-                            <label for="message">Message</label>
-
-                            <textarea name="message" id="message" rows="3"></textarea>
-                        </div>
-
-                    </div>
-
-                    <ul class="actions">
-                        <li>
-                            <input type="submit" value="Send Message" />
-                        </li>
-                    </ul>
-
-                </form>
-
-            </section>
-
-            <section class="split contact">
-
-                <section class="alt">
-                    <h3>Address</h3>
-
-                    <p>
-                        1234 Somewhere Road #87257 <br />
-                        Nashville, TN 00000-0000
-                    </p>
-                </section>
-
-                <section>
-                    <h3>Phone</h3>
-
-                    <p>
-                        <a href="#">(000) 000-0000</a>
-                    </p>
-                </section>
-
-                <section>
-                    <h3>Email</h3>
-
-                    <p>
-                        <a href="#">info@untitled.tld</a>
-                    </p>
-                </section>
-
-                <section>
-
-                    <h3>Social</h3>
-
-                    <ul class="icons alt">
-
-                        <li>
-                            <a href="#" class="icon brands alt fa-twitter">
-                                <span class="label">Twitter</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="icon brands alt fa-facebook-f">
-                                <span class="label">Facebook</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="icon brands alt fa-instagram">
-                                <span class="label">Instagram</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="icon brands alt fa-github">
-                                <span class="label">GitHub</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </section>
-
-            </section>
-
-        </footer>
-
-        <!-- Copyright -->
-        <div id="copyright">
-            <ul>
-                <li>&copy; AgroVet</li>
-                <li>
-                    Design:
-                    <a href="https://html5up.net">
-                        HTML5 UP
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div id="wrapper" class="fade-in">
+
+    <!-- INTRO -->
+    <div id="intro">
+
+        <h1>Panel de Administración</h1>
+
+        <p>
+            Administra productos, usuarios,
+            pedidos y pagos de AgroVet.
+        </p>
+
+        <ul class="actions">
+
+            <li>
+                <a href="#productos-admin" class="button">
+                    Productos
+                </a>
+            </li>
+
+            <li>
+                <a href="#usuarios-admin" class="button">
+                    Usuarios
+                </a>
+            </li>
+
+            <li>
+                <a href="#pedidos-admin" class="button">
+                    Pedidos
+                </a>
+            </li>
+
+            <li>
+                <a href="#pagos-admin" class="button">
+                    Pagos
+                </a>
+            </li>
+
+            <li>
+                <button onclick="logout()" class="button">
+                    Cerrar sesión
+                </button>
+            </li>
+
+        </ul>
 
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- NAV -->
+    <nav id="nav">
 
-    <!-- Firebase -->
-    <script type="module">
+        <ul class="links">
 
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+            <li class="active">
+                <a href="admin.html">
+                    Admin
+                </a>
+            </li>
 
-        import {
-            getAuth,
-            onAuthStateChanged
-        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+            <li>
+                <a href="index.html">
+                    Inicio
+                </a>
+            </li>
 
-        import {
-            getFirestore,
-            doc,
-            getDoc
-        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+        </ul>
 
-        import { logout } from './carrito.js';
+    </nav>
 
-        // CONFIG FIREBASE
-        const firebaseConfig = {
+    <!-- MAIN -->
+    <div id="main">
 
-            apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+        <!-- FEATURED -->
+        <article class="post featured">
 
-            authDomain: "agrovet-edb35.firebaseapp.com",
+            <header class="major">
 
-            projectId: "agrovet-edb35",
+                <span class="date">
+                    🐄 Ganadería
+                </span>
 
-            storageBucket: "agrovet-edb35.firebasestorage.app",
+                <h2>
+                    Salud y productividad de tu ganado
+                </h2>
 
-            messagingSenderId: "549615594048",
+                <p>
+                    Medicamentos, suplementos y asesoría veterinaria
+                    para mantener tu ganado saludable y productivo.
+                </p>
 
-            appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+            </header>
 
-            measurementId: "G-5YFZVDHHRX"
-        };
+            <a href="#" class="image main">
+                <img src="images/fondo.png" alt="Ganado saludable" />
+            </a>
 
-        // INICIAR FIREBASE
-        const app = initializeApp(firebaseConfig);
+            <ul class="actions special">
 
-        const auth = getAuth(app);
+                <li>
+                    <a href="#productos-admin" class="button large">
+                        Administrar Productos
+                    </a>
+                </li>
 
-        const db = getFirestore(app);
+                <li>
+                    <a href="#usuarios-admin" class="button large">
+                        Gestionar Usuarios
+                    </a>
+                </li>
 
-        // HACER GLOBAL EL LOGOUT
-        window.logout = logout;
+            </ul>
 
-        // VALIDAR SESIÓN
-        onAuthStateChanged(auth, async (user) => {
+        </article>
 
-            // SI NO HAY SESIÓN
-            if (!user) {
+        <!-- PRODUCTOS -->
+        <article id="productos-admin">
 
-                window.location.href = 'login.html';
+            <header>
+                <span class="date">Productos</span>
+                <h2>Gestionar Productos</h2>
+            </header>
 
-                return;
-            }
+            <div class="fields">
 
-            try {
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" id="producto-nombre" />
+                </div>
 
-                // BUSCAR USUARIO EN FIRESTORE
-                const userRef = doc(db, 'users', user.uid);
+                <div class="field">
+                    <label>Precio</label>
+                    <input type="number" id="producto-precio" />
+                </div>
 
-                const userDoc = await getDoc(userRef);
+                <div class="field">
+                    <label>Imagen URL</label>
+                    <input type="text" id="producto-imagen" />
+                </div>
 
-                // SI NO EXISTE
-                if (!userDoc.exists()) {
+            </div>
 
-                    alert('Usuario no registrado');
+            <ul class="actions">
+                <li>
+                    <button onclick="agregarProducto()">
+                        Agregar producto
+                    </button>
+                </li>
+            </ul>
 
-                    window.location.href = 'index.html';
+            <div id="productos-lista"></div>
 
-                    return;
-                }
+        </article>
 
-                // OBTENER ROL
-                const rol = userDoc.data().rol;
+        <!-- USUARIOS -->
+        <article id="usuarios-admin">
 
-                console.log("ROL DEL USUARIO:", rol);
+            <header>
+                <span class="date">Usuarios</span>
+                <h2>Gestionar Usuarios</h2>
+            </header>
 
-                // VALIDAR ADMIN
-                if (rol !== 'admin') {
+            <div id="usuarios-lista"></div>
 
-                    alert('No tienes acceso al panel de administración');
+        </article>
 
-                    window.location.href = 'index.html';
+        <!-- PEDIDOS -->
+        <article id="pedidos-admin">
 
-                    return;
-                }
+            <header>
+                <span class="date">Pedidos</span>
+                <h2>Visualizar Pedidos</h2>
+            </header>
 
-                // SI ES ADMIN
-                console.log('Bienvenido administrador');
+            <div id="pedidos-lista"></div>
 
-            } catch (error) {
+        </article>
 
-                console.error(error);
+        <!-- PAGOS -->
+        <article id="pagos-admin">
 
-                alert('Error al validar usuario');
+            <header>
+                <span class="date">Pagos</span>
+                <h2>Administrar Pagos</h2>
+            </header>
 
-                window.location.href = 'index.html';
-            }
+            <div id="pagos-lista"></div>
 
-        });
+        </article>
 
-    </script>
+    </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    updateDoc
+} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+
+    apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+
+    authDomain: "agrovet-edb35.firebaseapp.com",
+
+    projectId: "agrovet-edb35",
+
+    storageBucket: "agrovet-edb35.firebasestorage.app",
+
+    messagingSenderId: "549615594048",
+
+    appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+
+    measurementId: "G-5YFZVDHHRX"
+};
+
+// INICIAR
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+// LOGOUT
+async function logout() {
+
+    await signOut(auth);
+
+    window.location.href = 'login.html';
+}
+
+// VALIDAR ADMIN
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        window.location.href = 'login.html';
+
+        return;
+    }
+
+    const userRef = doc(db, 'users', user.uid);
+
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+
+        alert('Usuario no encontrado');
+
+        return;
+    }
+
+    const rol = userDoc.data().rol;
+
+    if (rol !== 'admin') {
+
+        alert('No eres administrador');
+
+        window.location.href = 'index.html';
+
+        return;
+    }
+
+    cargarProductos();
+    cargarUsuarios();
+    cargarPedidos();
+    cargarPagos();
+
+});
+
+// AGREGAR PRODUCTO
+async function agregarProducto() {
+
+    const nombre = document.getElementById('producto-nombre').value;
+
+    const precio = document.getElementById('producto-precio').value;
+
+    const imagen = document.getElementById('producto-imagen').value;
+
+    if (!nombre || !precio) {
+
+        alert('Completa todos los campos');
+
+        return;
+    }
+
+    await addDoc(collection(db, 'products'), {
+
+        nombre,
+        precio,
+        imagen,
+
+        fecha: new Date().toISOString()
+    });
+
+    alert('Producto agregado');
+
+    cargarProductos();
+}
+
+// CARGAR PRODUCTOS
+async function cargarProductos() {
+
+    const lista = document.getElementById('productos-lista');
+
+    lista.innerHTML = '';
+
+    const querySnapshot = await getDocs(collection(db, 'products'));
+
+    querySnapshot.forEach((docu) => {
+
+        const producto = docu.data();
+
+        lista.innerHTML += `
+
+        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+
+            <h3>${producto.nombre}</h3>
+
+            <p>Precio: $${producto.precio}</p>
+
+            <img src="${producto.imagen}" width="120">
+
+            <br><br>
+
+            <button onclick="eliminarProducto('${docu.id}')">
+                Eliminar
+            </button>
+
+        </div>
+        `;
+    });
+}
+
+// ELIMINAR PRODUCTO
+async function eliminarProducto(id) {
+
+    await deleteDoc(doc(db, 'products', id));
+
+    cargarProductos();
+}
+
+// CARGAR USUARIOS
+async function cargarUsuarios() {
+
+    const lista = document.getElementById('usuarios-lista');
+
+    lista.innerHTML = '';
+
+    const querySnapshot = await getDocs(collection(db, 'users'));
+
+    querySnapshot.forEach((docu) => {
+
+        const usuario = docu.data();
+
+        lista.innerHTML += `
+
+        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+
+            <h3>${usuario.email}</h3>
+
+            <p>Rol: ${usuario.rol}</p>
+
+            <button onclick="hacerAdmin('${docu.id}')">
+                Hacer Admin
+            </button>
+
+        </div>
+        `;
+    });
+}
+
+// HACER ADMIN
+async function hacerAdmin(id) {
+
+    await updateDoc(doc(db, 'users', id), {
+
+        rol: 'admin'
+    });
+
+    alert('Usuario actualizado');
+
+    cargarUsuarios();
+}
+
+// CARGAR PEDIDOS
+async function cargarPedidos() {
+
+    const lista = document.getElementById('pedidos-lista');
+
+    lista.innerHTML = '';
+
+    const querySnapshot = await getDocs(collection(db, 'pedidos'));
+
+    querySnapshot.forEach((docu) => {
+
+        const pedido = docu.data();
+
+        lista.innerHTML += `
+
+        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+
+            <h3>Pedido</h3>
+
+            <p>Cliente: ${pedido.usuario || 'Sin nombre'}</p>
+
+            <p>Total: $${pedido.total || 0}</p>
+
+            <p>Estado: ${pedido.estado || 'Pendiente'}</p>
+
+        </div>
+        `;
+    });
+}
+
+// CARGAR PAGOS
+async function cargarPagos() {
+
+    const lista = document.getElementById('pagos-lista');
+
+    lista.innerHTML = '';
+
+    const querySnapshot = await getDocs(collection(db, 'pagos'));
+
+    querySnapshot.forEach((docu) => {
+
+        const pago = docu.data();
+
+        lista.innerHTML += `
+
+        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+
+            <h3>Pago</h3>
+
+            <p>Método: ${pago.metodo || 'No definido'}</p>
+
+            <p>Monto: $${pago.monto || 0}</p>
+
+            <p>Estado: ${pago.estado || 'Pendiente'}</p>
+
+        </div>
+        `;
+    });
+}
+
+// FUNCIONES GLOBALES
+window.logout = logout;
+window.agregarProducto = agregarProducto;
+window.eliminarProducto = eliminarProducto;
+window.hacerAdmin = hacerAdmin;
+
+</script>
 
 </body>
 </html>
+```
+
+# IMPORTANTE
+
+En Firebase Firestore debes crear estas colecciones:
+
+* users
+* products
+* pedidos
+* pagos
+
+Y en users debes tener:
+
+```json
+{
+  "email": "admin@gmail.com",
+  "rol": "admin"
+}
+```
