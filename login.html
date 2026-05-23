@@ -1,333 +1,558 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <title>Login - AgroVet</title>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link rel="stylesheet" href="assets/css/main.css" />
-    <!-- Firebase SDK -->    <style>
+
+    <style>
+
         body {
             background: linear-gradient(135deg, #f5f5f0 0%, #e8ddd1 100%);
         }
-        
+
         #header {
             background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
             box-shadow: 0 4px 6px rgba(45, 80, 22, 0.3);
         }
-        
+
         #header .logo {
             font-weight: 900;
             font-size: 1.8em;
             letter-spacing: 2px;
             color: #d4a574;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
+
         #nav ul.links li a {
             color: #e8ddd1;
         }
-        
+
         #nav ul.links li.active a {
             color: #d4a574;
             border-bottom: 2px solid #d4a574;
         }
-        
+
         section.post {
             background: white;
             border: 2px solid #2d5016;
             border-radius: 8px;
         }
-        
+
         section.post header {
             background: linear-gradient(135deg, #3d6b1f 0%, #2d5016 100%);
             color: #d4a574;
             border-radius: 6px 6px 0 0;
         }
-        
-        section.post header h1 {
+
+        section.post header h1,
+        section.post header h2 {
             color: #d4a574;
-            font-size: 2em;
         }
-        
+
         .field label {
             color: #2d5016;
             font-weight: bold;
         }
-        
-        .field input,
-        .field textarea {
+
+        .field input {
             background: #f9f9f9;
             border: 2px solid #8B7355;
             color: #2d5016;
         }
-        
-        .field input:focus,
-        .field textarea:focus {
+
+        .field input:focus {
             background: #fff;
             border-color: #d4a574;
             outline: none;
         }
-        
-        .actions input {
-            background: #2d5016 !important;
-            color: white !important;
-            border: 2px solid #2d5016 !important;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .actions input:hover {
-            background: #d4a574 !important;
-            color: #2d5016 !important;
-            border-color: #d4a574 !important;
-        }
-        
+
         button {
-            background: #3d6b1f;
-            color: #d4a574;
-            border: 2px solid #d4a574;
+            background: #2d5016;
+            color: white;
+            border: 2px solid #2d5016;
             padding: 12px 30px;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
-            margin: 15px 0;
             transition: all 0.3s ease;
         }
-        
+
         button:hover {
             background: #d4a574;
             color: #2d5016;
-        }
-        
-        p#login-message,
-        p#register-message {
-            color: #2d5016;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        
-        hr {
             border-color: #d4a574;
-            margin: 30px 0;
         }
+
+        #login-message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
     </style>
-    <!-- Firebase SDK -->    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
-        import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
-        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js';
 
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
-            authDomain: "agrovet-edb35.firebaseapp.com",
-            projectId: "agrovet-edb35",
-            storageBucket: "agrovet-edb35.firebasestorage.app",
-            messagingSenderId: "549615594048",
-            appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
-            measurementId: "G-5YFZVDHHRX"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
-
-        const ADMIN_EMAILS = [
-            'xitlaliglz@gmail.com',
-            'correo_de_aylin@gmail.com',
-            'correo_de_emmanuel@gmail.com'
-        ];
-
-        window.auth = auth;
-        window.db = db;
-        window.provider = provider;
-
-        window.loginWithGoogle = async function () {
-            const messageEl = document.getElementById('login-message');
-            try {
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                const email = user.email?.toLowerCase() || '';
-                const isAdmin = ADMIN_EMAILS.includes(email);
-                const rol = isAdmin ? 'admin' : 'cliente';
-                const nombre = user.displayName || email.split('@')[0] || '';
-
-                await setDoc(doc(db, 'users', user.uid), {
-                    name: nombre,
-                    email: user.email,
-                    rol,
-                    fechaRegistro: new Date().toISOString()
-                }, { merge: true });
-
-                if (messageEl) {
-                    messageEl.textContent = 'Inicio de sesión con Google exitoso';
-                }
-
-                window.location.href = isAdmin ? 'admin.html' : 'index.html';
-            } catch (error) {
-                if (messageEl) {
-                    messageEl.textContent = 'Error: ' + error.message;
-                }
-            }
-        };
-
-        function isGmailAddress(email) {
-            return /^[^\s@]+@gmail\.com$/i.test(email);
-        }
-
-        async function ensureUserRecord(user, rol = 'cliente') {
-            const userDocRef = doc(db, 'users', user.uid);
-            await setDoc(userDocRef, {
-                name: user.displayName || user.email?.split('@')[0] || '',
-                email: user.email,
-                rol,
-                fechaRegistro: new Date().toISOString()
-            }, { merge: true });
-        }
-
-        window.loginWithEmail = async function () {
-            const messageEl = document.getElementById('login-message');
-            const email = document.getElementById('email-input').value.trim();
-            const password = document.getElementById('password-input').value;
-
-            if (!email || !password) {
-                if (messageEl) messageEl.textContent = 'Ingresa correo y contraseña para continuar.';
-                return;
-            }
-
-            if (!isGmailAddress(email)) {
-                if (messageEl) messageEl.textContent = 'Solo se permiten correos Gmail para iniciar sesión.';
-                return;
-            }
-
-            try {
-                const result = await signInWithEmailAndPassword(auth, email, password);
-                if (!result.user.emailVerified) {
-                    await signOut(auth);
-                    if (messageEl) messageEl.textContent = 'Tu Gmail debe estar verificado antes de iniciar sesión. Revisa tu correo y confirma el enlace.';
-                    return;
-                }
-                await ensureUserRecord(result.user, 'cliente');
-                if (messageEl) messageEl.textContent = 'Inicio de sesión exitoso';
-                window.location.href = 'index.html';
-            } catch (error) {
-                if (messageEl) {
-                    messageEl.textContent = 'Error: ' + error.message;
-                }
-            }
-        };
-
-        window.registerWithEmail = async function () {
-            const messageEl = document.getElementById('login-message');
-            const email = document.getElementById('email-input').value.trim();
-            const password = document.getElementById('password-input').value;
-
-            if (!email || !password) {
-                if (messageEl) messageEl.textContent = 'Ingresa correo y contraseña para registrarte.';
-                return;
-            }
-
-            if (!isGmailAddress(email)) {
-                if (messageEl) messageEl.textContent = 'Solo se permiten correos Gmail para registrarse.';
-                return;
-            }
-
-            try {
-                const result = await createUserWithEmailAndPassword(auth, email, password);
-                await ensureUserRecord(result.user, 'cliente');
-                await sendEmailVerification(result.user);
-                if (messageEl) messageEl.textContent = 'Cuenta creada. Revisa tu Gmail y verifica tu correo antes de iniciar sesión.';
-            } catch (error) {
-                if (messageEl) {
-                    messageEl.textContent = 'Error: ' + error.message;
-                }
-            }
-        };
-    </script>
 </head>
 
 <body>
 
-<div id="wrapper">
+    <div id="wrapper">
 
-<header id="header">
-    <a href="index.html" class="logo">AgroVet</a>
-</header>
+        <!-- HEADER -->
+        <header id="header">
 
-<nav id="nav">
-    <ul class="links">
-        <li id="area-login" class="active"><a href="login.html">Iniciar sesión</a></li>
-    </ul>
-</nav>
+            <a href="index.html" class="logo">
+                AgroVet
+            </a>
 
-<div id="main">
-
-<section class="post featured">
-    <header class="major">
-        <span class="date">🐄 Ganadería</span>
-        <h2>Salud y productividad de tu ganado</h2>
-        <p>Medicamentos, suplementos y asesoría veterinaria para mantener tu rebaño saludable y productivo.</p>
-    </header>
-    <a href="#" class="image main"><img src="images/fondo.png" alt="Ganado saludable" /></a>
-
-    <section class="post" style="margin-top:2rem; padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.95);">
-        <header class="major">
-            <h2>Inicia con tu Gmail y contraseña</h2>
-            <p>Utiliza tu email y contraseña manualmente para entrar o crear una cuenta nueva.</p>
         </header>
-        <div class="fields">
-            <div class="field half">
-                <label for="email-input">Correo electrónico</label>
-                <input type="email" id="email-input" placeholder="tuemail@gmail.com" />
-            </div>
-            <div class="field half">
-                <label for="password-input">Contraseña</label>
-                <input type="password" id="password-input" placeholder="Contraseña" />
-            </div>
-        </div>
-        <div class="actions special" style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-            <button type="button" onclick="loginWithEmail()" class="button">Iniciar sesión</button>
-            <button type="button" onclick="registerWithEmail()" class="button alt">Registrarse</button>
-        </div>
-    </section>
 
-    <div class="actions special" style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:2rem;">
-        <button type="button" onclick="loginWithGoogle()" class="button large">🔗 Continuar con Google</button>
+        <!-- NAV -->
+        <nav id="nav">
+
+            <ul class="links">
+
+                <li class="active">
+                    <a href="login.html">
+                        Iniciar sesión
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+        <!-- MAIN -->
+        <div id="main">
+
+            <!-- FEATURED -->
+            <article class="post featured">
+
+                <header class="major">
+
+                    <span class="date">
+                        🐄 Ganadería
+                    </span>
+
+                    <h2>
+                        Salud y productividad de tu ganado
+                    </h2>
+
+                    <p>
+                        Medicamentos, suplementos y asesoría veterinaria
+                        para mantener tu rebaño saludable y productivo.
+                    </p>
+
+                </header>
+
+                <a href="#" class="image main">
+
+                    <img
+                        src="images/fondo.png"
+                        alt="Ganado saludable"
+                    />
+
+                </a>
+
+                <!-- LOGIN -->
+                <section
+                    class="post"
+                    style="
+                        margin-top:2rem;
+                        padding:2rem;
+                        border-radius:12px;
+                        background:rgba(255,255,255,0.95);
+                    "
+                >
+
+                    <header class="major">
+
+                        <h2>
+                            Inicia sesión
+                        </h2>
+
+                        <p>
+                            Accede con tu correo y contraseña
+                        </p>
+
+                    </header>
+
+                    <!-- CAMPOS -->
+                    <div class="fields">
+
+                        <div class="field half">
+
+                            <label for="email-input">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email-input"
+                                placeholder="correo@gmail.com"
+                            />
+
+                        </div>
+
+                        <div class="field half">
+
+                            <label for="password-input">
+                                Contraseña
+                            </label>
+
+                            <input
+                                type="password"
+                                id="password-input"
+                                placeholder="Contraseña"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div
+                        class="actions special"
+                        style="
+                            display:flex;
+                            justify-content:center;
+                            gap:1rem;
+                            flex-wrap:wrap;
+                            margin-top:1rem;
+                        "
+                    >
+
+                        <button
+                            type="button"
+                            onclick="loginWithEmail()"
+                        >
+                            Iniciar sesión
+                        </button>
+
+                        <button
+                            type="button"
+                            onclick="registerWithEmail()"
+                        >
+                            Registrarse
+                        </button>
+
+                    </div>
+
+                    <!-- GOOGLE -->
+                    <div
+                        class="actions special"
+                        style="
+                            margin-top:2rem;
+                        "
+                    >
+
+                        <button
+                            type="button"
+                            onclick="loginWithGoogle()"
+                        >
+                            🔗 Continuar con Google
+                        </button>
+
+                    </div>
+
+                    <!-- MENSAJE -->
+                    <p id="login-message"></p>
+
+                </section>
+
+            </article>
+
+        </div>
+
     </div>
-</section>
 
-<section class="posts">
-    <article>
-        <header>
-            <span class="date">🐕 Mascotas Felices</span>
-            <h2>Cuida a tu perro o gato con productos confiables</h2>
-        </header>
-        <p>Descubre los mejores alimentos, vacunas y accesorios para mantener su salud y bienestar.</p>
-    </article>
-    <article>
-        <header>
-            <span class="date">🐄 Ganadería</span>
-            <h2>Todo lo necesario para tu rebaño</h2>
-        </header>
-        <p>Soluciones especializadas en veterinaria y nutrición para aumentar productividad y salud animal.</p>
-    </article>
-</section>
+    <!-- FIREBASE -->
+    <script type="module">
 
-<p id="login-message" style="text-align:center; margin-top:1.5rem; color:#2d5016; font-weight:bold;"></p>
+        import {
+            initializeApp
+        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
 
-</div>
+        import {
 
-</div>
+            getAuth,
 
-<script type="module">
-    import { verificarAutenticacion, logout } from './carrito.js';
-    verificarAutenticacion();
-    window.logout = logout;
-</script>
+            signInWithPopup,
+
+            GoogleAuthProvider,
+
+            signInWithEmailAndPassword,
+
+            createUserWithEmailAndPassword,
+
+            sendEmailVerification,
+
+            signOut
+
+        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
+        import {
+
+            getFirestore,
+
+            doc,
+
+            setDoc,
+
+            getDoc
+
+        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        // CONFIG FIREBASE
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+
+            authDomain: "agrovet-edb35.firebaseapp.com",
+
+            projectId: "agrovet-edb35",
+
+            storageBucket: "agrovet-edb35.firebasestorage.app",
+
+            messagingSenderId: "549615594048",
+
+            appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+
+            measurementId: "G-5YFZVDHHRX"
+
+        };
+
+        // INICIAR FIREBASE
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const db = getFirestore(app);
+
+        const provider = new GoogleAuthProvider();
+
+        // MENSAJES
+        const messageEl = document.getElementById('login-message');
+
+        // LOGIN GOOGLE
+        async function loginWithGoogle() {
+
+            try {
+
+                const result = await signInWithPopup(
+                    auth,
+                    provider
+                );
+
+                const user = result.user;
+
+                const userRef = doc(
+                    db,
+                    'users',
+                    user.uid
+                );
+
+                const userDoc = await getDoc(userRef);
+
+                // SI NO EXISTE CREAR
+                if (!userDoc.exists()) {
+
+                    await setDoc(userRef, {
+
+                        email: user.email,
+
+                        rol: 'cliente',
+
+                        fechaRegistro: new Date().toISOString()
+
+                    });
+
+                }
+
+                // OBTENER ROL
+                const finalDoc = await getDoc(userRef);
+
+                const rol = finalDoc.data().rol;
+
+                messageEl.textContent =
+                    'Inicio de sesión exitoso';
+
+                // REDIRECCIONAR
+                if (rol === 'admin') {
+
+                    window.location.href =
+                        'admin.html';
+
+                } else {
+
+                    window.location.href =
+                        'index.html';
+                }
+
+            } catch (error) {
+
+                messageEl.textContent =
+                    error.message;
+
+                console.error(error);
+            }
+        }
+
+        // LOGIN EMAIL
+        async function loginWithEmail() {
+
+            const email =
+                document.getElementById(
+                    'email-input'
+                ).value.trim();
+
+            const password =
+                document.getElementById(
+                    'password-input'
+                ).value;
+
+            if (!email || !password) {
+
+                messageEl.textContent =
+                    'Ingresa correo y contraseña';
+
+                return;
+            }
+
+            try {
+
+                const result =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+                const user = result.user;
+
+                // VERIFICAR EMAIL
+                if (!user.emailVerified) {
+
+                    await signOut(auth);
+
+                    messageEl.textContent =
+                        'Debes verificar tu correo';
+
+                    return;
+                }
+
+                const userRef =
+                    doc(db, 'users', user.uid);
+
+                const userDoc =
+                    await getDoc(userRef);
+
+                const rol =
+                    userDoc.data().rol;
+
+                messageEl.textContent =
+                    'Inicio de sesión exitoso';
+
+                // REDIRECCIONAR
+                if (rol === 'admin') {
+
+                    window.location.href =
+                        'admin.html';
+
+                } else {
+
+                    window.location.href =
+                        'index.html';
+                }
+
+            } catch (error) {
+
+                messageEl.textContent =
+                    error.message;
+
+                console.error(error);
+            }
+        }
+
+        // REGISTRO
+        async function registerWithEmail() {
+
+            const email =
+                document.getElementById(
+                    'email-input'
+                ).value.trim();
+
+            const password =
+                document.getElementById(
+                    'password-input'
+                ).value;
+
+            if (!email || !password) {
+
+                messageEl.textContent =
+                    'Ingresa correo y contraseña';
+
+                return;
+            }
+
+            try {
+
+                const result =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+                const user = result.user;
+
+                // GUARDAR FIRESTORE
+                await setDoc(
+                    doc(db, 'users', user.uid),
+                    {
+
+                        email: email,
+
+                        rol: 'cliente',
+
+                        fechaRegistro:
+                            new Date().toISOString()
+
+                    }
+                );
+
+                // VERIFICAR EMAIL
+                await sendEmailVerification(user);
+
+                messageEl.textContent =
+                    'Cuenta creada. Verifica tu Gmail';
+
+            } catch (error) {
+
+                messageEl.textContent =
+                    error.message;
+
+                console.error(error);
+            }
+        }
+
+        // HACER FUNCIONES GLOBALES
+        window.loginWithGoogle =
+            loginWithGoogle;
+
+        window.loginWithEmail =
+            loginWithEmail;
+
+        window.registerWithEmail =
+            registerWithEmail;
+
+    </script>
 
 </body>
+
 </html>

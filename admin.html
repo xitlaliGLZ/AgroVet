@@ -1,199 +1,392 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Panel de Administración - Veterinaria</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<head>
+    <title>Panel de Administración - Veterinaria</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
+</head>
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1>Panel de Administración</h1>
-						<p>Bienvenido al panel de administración de la veterinaria</p>
-						<ul class="actions">
-							<li><a href="#ventas" class="button icon solid solo fa-arrow-down scrolly">Ver Ventas</a></li>
-							<li><a href="#citas" class="button icon solid solo fa-arrow-down scrolly">Ver Citas</a></li>
-							<li><button onclick="logout()" class="button">Cerrar Sesión</button></li>
-						</ul>
-					</div>
+<body class="is-preload">
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li class="active"><a href="index.html">Inicio</a></li>
-							<li><a href="index.html#productos">Catálogo</a></li>
-							<li><a href="index.html#citas">Citas</a></li>
-							<li><a href="#ventas">Ventas</a></li>
-                            <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
-						</ul>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
+    <!-- Wrapper -->
+    <div id="wrapper" class="fade-in">
 
-				<!-- Main -->
-					<div id="main">
+        <!-- Intro -->
+        <div id="intro">
+            <h1>Panel de Administración</h1>
+            <p>Bienvenido al panel de administración de la veterinaria</p>
 
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<span class="date">Panel de Administración</span>
-									<h2>Gestión de Ventas y Citas</h2>
-									<p>Administra las ventas realizadas y las citas programadas en la veterinaria.</p>
-								</header>
-							</article>
+            <ul class="actions">
+                <li>
+                    <a href="#ventas" class="button icon solid solo fa-arrow-down scrolly">
+                        Ver Ventas
+                    </a>
+                </li>
 
-						<!-- Posts -->
-							<section class="posts">
-								<article id="ventas">
-									<header>
-										<span class="date">Ventas</span>
-										<h2><a href="#">Historial de Ventas</a></h2>
-									</header>
-									<div id="ventas-list">
-										<!-- Las ventas se cargarán aquí dinámicamente -->
-									</div>
-								</article>
-								<article id="citas">
-									<header>
-										<span class="date">Citas</span>
-										<h2><a href="#">Citas Programadas</a></h2>
-									</header>
-									<div id="citas-list">
-										<!-- Las citas se cargarán aquí dinámicamente -->
-									</div>
-								</article>
-							</section>
+                <li>
+                    <a href="#citas" class="button icon solid solo fa-arrow-down scrolly">
+                        Ver Citas
+                    </a>
+                </li>
 
-					</div>
+                <li>
+                    <button onclick="logout()" class="button">
+                        Cerrar Sesión
+                    </button>
+                </li>
+            </ul>
+        </div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="email" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
-						<section class="split contact">
-							<section class="alt">
-								<h3>Address</h3>
-								<p>1234 Somewhere Road #87257<br />
-								Nashville, TN 00000-0000</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="#">(000) 000-0000</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
+        <!-- Nav -->
+        <nav id="nav">
 
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
+            <ul class="links">
+                <li class="active">
+                    <a href="index.html">Inicio</a>
+                </li>
 
-			</div>
+                <li>
+                    <a href="index.html#productos">Catálogo</a>
+                </li>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script type="module" src="carrito.js"></script>
-	</body>
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
-    import { logout } from './carrito.js';
+                <li>
+                    <a href="index.html#citas">Citas</a>
+                </li>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
-        authDomain: "agrovet-edb35.firebaseapp.com",
-        projectId: "agrovet-edb35",
-        storageBucket: "agrovet-edb35.firebasestorage.app",
-        messagingSenderId: "549615594048",
-        appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
-        measurementId: "G-5YFZVDHHRX"
-    };
+                <li>
+                    <a href="#ventas">Ventas</a>
+                </li>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    window.logout = logout;
+                <li>
+                    <a href="#" onclick="logout()">Cerrar sesión</a>
+                </li>
+            </ul>
 
-    const ADMIN_EMAILS = [
-        'xitlaligonzalez35@gmail.com',
-        'xitlaligonzalez616@gmail.com',
-        'correo_de_emmanuel@gmail.com'
-    ];
+            <ul class="icons">
+                <li>
+                    <a href="#" class="icon brands fa-twitter">
+                        <span class="label">Twitter</span>
+                    </a>
+                </li>
 
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-            window.location.href = 'login.html';
-            return;
-        }
+                <li>
+                    <a href="#" class="icon brands fa-facebook-f">
+                        <span class="label">Facebook</span>
+                    </a>
+                </li>
 
-        const userEmail = user.email?.toLowerCase();
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        let rol = userDoc.exists() ? userDoc.data()?.rol : null;
+                <li>
+                    <a href="#" class="icon brands fa-instagram">
+                        <span class="label">Instagram</span>
+                    </a>
+                </li>
 
-        if (!rol) {
-            rol = ADMIN_EMAILS.includes(userEmail) ? 'admin' : 'cliente';
-            await setDoc(doc(db, 'users', user.uid), {
-                name: user.displayName || '',
-                email: user.email,
-                rol,
-                fechaRegistro: new Date().toISOString()
-            }, { merge: true });
-        }
+                <li>
+                    <a href="#" class="icon brands fa-github">
+                        <span class="label">GitHub</span>
+                    </a>
+                </li>
+            </ul>
 
-        if (rol !== 'admin') {
-            alert('No tienes acceso');
-            window.location.href = 'index.html';
-            return;
-        }
-    });
-</script>
+        </nav>
+
+        <!-- Main -->
+        <div id="main">
+
+            <!-- Encabezado -->
+            <article class="post featured">
+                <header class="major">
+                    <span class="date">Panel de Administración</span>
+
+                    <h2>
+                        Gestión de Ventas y Citas
+                    </h2>
+
+                    <p>
+                        Administra las ventas realizadas y las citas programadas
+                        en la veterinaria.
+                    </p>
+                </header>
+            </article>
+
+            <!-- Secciones -->
+            <section class="posts">
+
+                <!-- Ventas -->
+                <article id="ventas">
+
+                    <header>
+                        <span class="date">Ventas</span>
+
+                        <h2>
+                            <a href="#">Historial de Ventas</a>
+                        </h2>
+                    </header>
+
+                    <div id="ventas-list">
+                        <!-- Las ventas se cargarán aquí -->
+                    </div>
+
+                </article>
+
+                <!-- Citas -->
+                <article id="citas">
+
+                    <header>
+                        <span class="date">Citas</span>
+
+                        <h2>
+                            <a href="#">Citas Programadas</a>
+                        </h2>
+                    </header>
+
+                    <div id="citas-list">
+                        <!-- Las citas se cargarán aquí -->
+                    </div>
+
+                </article>
+
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+
+            <section>
+
+                <form method="post" action="#">
+
+                    <div class="fields">
+
+                        <div class="field">
+                            <label for="name">Name</label>
+
+                            <input type="text" name="name" id="name" />
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email</label>
+
+                            <input type="email" name="email" id="email" />
+                        </div>
+
+                        <div class="field">
+                            <label for="message">Message</label>
+
+                            <textarea name="message" id="message" rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                    <ul class="actions">
+                        <li>
+                            <input type="submit" value="Send Message" />
+                        </li>
+                    </ul>
+
+                </form>
+
+            </section>
+
+            <section class="split contact">
+
+                <section class="alt">
+                    <h3>Address</h3>
+
+                    <p>
+                        1234 Somewhere Road #87257 <br />
+                        Nashville, TN 00000-0000
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Phone</h3>
+
+                    <p>
+                        <a href="#">(000) 000-0000</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Email</h3>
+
+                    <p>
+                        <a href="#">info@untitled.tld</a>
+                    </p>
+                </section>
+
+                <section>
+
+                    <h3>Social</h3>
+
+                    <ul class="icons alt">
+
+                        <li>
+                            <a href="#" class="icon brands alt fa-twitter">
+                                <span class="label">Twitter</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="icon brands alt fa-facebook-f">
+                                <span class="label">Facebook</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="icon brands alt fa-instagram">
+                                <span class="label">Instagram</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="icon brands alt fa-github">
+                                <span class="label">GitHub</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </section>
+
+            </section>
+
+        </footer>
+
+        <!-- Copyright -->
+        <div id="copyright">
+            <ul>
+                <li>&copy; AgroVet</li>
+                <li>
+                    Design:
+                    <a href="https://html5up.net">
+                        HTML5 UP
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Firebase -->
+    <script type="module">
+
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
+        import {
+            getFirestore,
+            doc,
+            getDoc
+        } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        import { logout } from './carrito.js';
+
+        // CONFIG FIREBASE
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+
+            authDomain: "agrovet-edb35.firebaseapp.com",
+
+            projectId: "agrovet-edb35",
+
+            storageBucket: "agrovet-edb35.firebasestorage.app",
+
+            messagingSenderId: "549615594048",
+
+            appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+
+            measurementId: "G-5YFZVDHHRX"
+        };
+
+        // INICIAR FIREBASE
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const db = getFirestore(app);
+
+        // HACER GLOBAL EL LOGOUT
+        window.logout = logout;
+
+        // VALIDAR SESIÓN
+        onAuthStateChanged(auth, async (user) => {
+
+            // SI NO HAY SESIÓN
+            if (!user) {
+
+                window.location.href = 'login.html';
+
+                return;
+            }
+
+            try {
+
+                // BUSCAR USUARIO EN FIRESTORE
+                const userRef = doc(db, 'users', user.uid);
+
+                const userDoc = await getDoc(userRef);
+
+                // SI NO EXISTE
+                if (!userDoc.exists()) {
+
+                    alert('Usuario no registrado');
+
+                    window.location.href = 'index.html';
+
+                    return;
+                }
+
+                // OBTENER ROL
+                const rol = userDoc.data().rol;
+
+                console.log("ROL DEL USUARIO:", rol);
+
+                // VALIDAR ADMIN
+                if (rol !== 'admin') {
+
+                    alert('No tienes acceso al panel de administración');
+
+                    window.location.href = 'index.html';
+
+                    return;
+                }
+
+                // SI ES ADMIN
+                console.log('Bienvenido administrador');
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert('Error al validar usuario');
+
+                window.location.href = 'index.html';
+            }
+
+        });
+
+    </script>
+
+</body>
 </html>
