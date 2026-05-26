@@ -1,11 +1,12 @@
-# admin.html completo con gestión de productos, usuarios, pedidos y pagos
-
-```html
 <!DOCTYPE HTML>
 <html>
+
 <head>
+
     <title>Panel de Administración - AgroVet</title>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -13,6 +14,39 @@
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+
+    <style>
+
+        #nav {
+
+            background: #1e252d;
+
+        }
+
+        .admin-box {
+
+            border: 1px solid #ccc;
+
+            padding: 15px;
+
+            margin: 15px 0;
+
+            border-radius: 10px;
+
+            background: #fff;
+
+        }
+
+        .admin-box img {
+
+            max-width: 120px;
+
+            border-radius: 10px;
+
+        }
+
+    </style>
+
 </head>
 
 <body class="is-preload">
@@ -22,7 +56,9 @@
     <!-- INTRO -->
     <div id="intro">
 
-        <h1>Panel de Administración</h1>
+        <h1>
+            Panel de Administración
+        </h1>
 
         <p>
             Administra productos, usuarios,
@@ -72,13 +108,43 @@
 
             <li class="active">
                 <a href="admin.html">
-                    Admin
+                    Panel Admin
+                </a>
+            </li>
+
+            <li>
+                <a href="#productos-admin">
+                    Productos
+                </a>
+            </li>
+
+            <li>
+                <a href="#usuarios-admin">
+                    Usuarios
+                </a>
+            </li>
+
+            <li>
+                <a href="#pedidos-admin">
+                    Pedidos
+                </a>
+            </li>
+
+            <li>
+                <a href="#pagos-admin">
+                    Pagos
                 </a>
             </li>
 
             <li>
                 <a href="index.html">
                     Inicio
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="logout()">
+                    Cerrar sesión
                 </a>
             </li>
 
@@ -110,20 +176,29 @@
             </header>
 
             <a href="#" class="image main">
-                <img src="images/fondo.png" alt="Ganado saludable" />
+
+                <img src="images/fondo.png"
+                     alt="Ganado saludable" />
+
             </a>
 
             <ul class="actions special">
 
                 <li>
-                    <a href="#productos-admin" class="button large">
+                    <a href="#productos-admin"
+                       class="button large">
+
                         Administrar Productos
+
                     </a>
                 </li>
 
                 <li>
-                    <a href="#usuarios-admin" class="button large">
+                    <a href="#usuarios-admin"
+                       class="button large">
+
                         Gestionar Usuarios
+
                     </a>
                 </li>
 
@@ -135,35 +210,66 @@
         <article id="productos-admin">
 
             <header>
-                <span class="date">Productos</span>
-                <h2>Gestionar Productos</h2>
+
+                <span class="date">
+                    Productos
+                </span>
+
+                <h2>
+                    Agregar Productos
+                </h2>
+
             </header>
 
             <div class="fields">
 
                 <div class="field">
-                    <label>Nombre</label>
-                    <input type="text" id="producto-nombre" />
+
+                    <label>
+                        Nombre
+                    </label>
+
+                    <input type="text"
+                           id="producto-nombre" />
+
                 </div>
 
                 <div class="field">
-                    <label>Precio</label>
-                    <input type="number" id="producto-precio" />
+
+                    <label>
+                        Precio
+                    </label>
+
+                    <input type="number"
+                           id="producto-precio" />
+
                 </div>
 
                 <div class="field">
-                    <label>Imagen URL</label>
-                    <input type="text" id="producto-imagen" />
+
+                    <label>
+                        Imagen URL
+                    </label>
+
+                    <input type="text"
+                           id="producto-imagen" />
+
                 </div>
 
             </div>
 
             <ul class="actions">
+
                 <li>
+
                     <button onclick="agregarProducto()">
+
                         Agregar producto
+
                     </button>
+
                 </li>
+
             </ul>
 
             <div id="productos-lista"></div>
@@ -174,8 +280,15 @@
         <article id="usuarios-admin">
 
             <header>
-                <span class="date">Usuarios</span>
-                <h2>Gestionar Usuarios</h2>
+
+                <span class="date">
+                    Usuarios
+                </span>
+
+                <h2>
+                    Gestionar Usuarios
+                </h2>
+
             </header>
 
             <div id="usuarios-lista"></div>
@@ -186,8 +299,15 @@
         <article id="pedidos-admin">
 
             <header>
-                <span class="date">Pedidos</span>
-                <h2>Visualizar Pedidos</h2>
+
+                <span class="date">
+                    Pedidos
+                </span>
+
+                <h2>
+                    Visualizar Pedidos
+                </h2>
+
             </header>
 
             <div id="pedidos-lista"></div>
@@ -198,8 +318,15 @@
         <article id="pagos-admin">
 
             <header>
-                <span class="date">Pagos</span>
-                <h2>Administrar Pagos</h2>
+
+                <span class="date">
+                    Pagos
+                </span>
+
+                <h2>
+                    Administrar Pagos
+                </h2>
+
             </header>
 
             <div id="pagos-lista"></div>
@@ -222,71 +349,97 @@
 <!-- FIREBASE -->
 <script type="module">
 
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+import {
+    initializeApp
+} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
 
 import {
+
     getAuth,
+
     onAuthStateChanged,
+
     signOut
+
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 
 import {
+
     getFirestore,
+
     doc,
+
     getDoc,
+
     collection,
+
     addDoc,
+
     getDocs,
+
     deleteDoc,
+
     updateDoc
+
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
 
-// FIREBASE CONFIG
 const firebaseConfig = {
 
-    apiKey: "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
+    apiKey:
+    "AIzaSyB7v0bI0p_GiRAI9IEMaLhnkYRePkECNqc",
 
-    authDomain: "agrovet-edb35.firebaseapp.com",
+    authDomain:
+    "agrovet-edb35.firebaseapp.com",
 
-    projectId: "agrovet-edb35",
+    projectId:
+    "agrovet-edb35",
 
-    storageBucket: "agrovet-edb35.firebasestorage.app",
+    storageBucket:
+    "agrovet-edb35.firebasestorage.app",
 
-    messagingSenderId: "549615594048",
+    messagingSenderId:
+    "549615594048",
 
-    appId: "1:549615594048:web:42f7eab574eb9c25ca4da5",
+    appId:
+    "1:549615594048:web:42f7eab574eb9c25ca4da5",
 
-    measurementId: "G-5YFZVDHHRX"
+    measurementId:
+    "G-5YFZVDHHRX"
 };
 
-// INICIAR
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+    getAuth(app);
 
-const db = getFirestore(app);
+const db =
+    getFirestore(app);
 
-// LOGOUT
 async function logout() {
 
     await signOut(auth);
 
-    window.location.href = 'login.html';
+    window.location.href =
+        'login.html';
 }
 
-// VALIDAR ADMIN
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth,
+async (user) => {
 
     if (!user) {
 
-        window.location.href = 'login.html';
+        window.location.href =
+            'login.html';
 
         return;
     }
 
-    const userRef = doc(db, 'users', user.uid);
+    const userRef =
+        doc(db, 'users', user.uid);
 
-    const userDoc = await getDoc(userRef);
+    const userDoc =
+        await getDoc(userRef);
 
     if (!userDoc.exists()) {
 
@@ -295,81 +448,102 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
-    const rol = userDoc.data().rol;
+    const rol =
+        userDoc.data().rol;
 
     if (rol !== 'admin') {
 
         alert('No eres administrador');
 
-        window.location.href = 'index.html';
+        window.location.href =
+            'index.html';
 
         return;
     }
 
     cargarProductos();
+
     cargarUsuarios();
+
     cargarPedidos();
+
     cargarPagos();
 
 });
 
-// AGREGAR PRODUCTO
 async function agregarProducto() {
 
-    const nombre = document.getElementById('producto-nombre').value;
+    const nombre =
+        document.getElementById(
+            'producto-nombre'
+        ).value;
 
-    const precio = document.getElementById('producto-precio').value;
+    const precio =
+        document.getElementById(
+            'producto-precio'
+        ).value;
 
-    const imagen = document.getElementById('producto-imagen').value;
+    const imagen =
+        document.getElementById(
+            'producto-imagen'
+        ).value;
 
-    if (!nombre || !precio) {
+    await addDoc(
+        collection(db, 'products'),
+        {
 
-        alert('Completa todos los campos');
+            nombre,
 
-        return;
-    }
+            precio,
 
-    await addDoc(collection(db, 'products'), {
+            imagen,
 
-        nombre,
-        precio,
-        imagen,
-
-        fecha: new Date().toISOString()
-    });
-
-    alert('Producto agregado');
+            fecha:
+            new Date().toISOString()
+        }
+    );
 
     cargarProductos();
 }
 
-// CARGAR PRODUCTOS
 async function cargarProductos() {
 
-    const lista = document.getElementById('productos-lista');
+    const lista =
+        document.getElementById(
+            'productos-lista'
+        );
 
     lista.innerHTML = '';
 
-    const querySnapshot = await getDocs(collection(db, 'products'));
+    const querySnapshot =
+        await getDocs(
+            collection(db, 'products')
+        );
 
     querySnapshot.forEach((docu) => {
 
-        const producto = docu.data();
+        const producto =
+            docu.data();
 
         lista.innerHTML += `
 
-        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+        <div class="admin-box">
 
             <h3>${producto.nombre}</h3>
 
-            <p>Precio: $${producto.precio}</p>
+            <p>
+                Precio:
+                $${producto.precio}
+            </p>
 
-            <img src="${producto.imagen}" width="120">
+            <img src="${producto.imagen}">
 
             <br><br>
 
             <button onclick="eliminarProducto('${docu.id}')">
+
                 Eliminar
+
             </button>
 
         </div>
@@ -377,37 +551,49 @@ async function cargarProductos() {
     });
 }
 
-// ELIMINAR PRODUCTO
 async function eliminarProducto(id) {
 
-    await deleteDoc(doc(db, 'products', id));
+    await deleteDoc(
+        doc(db, 'products', id)
+    );
 
     cargarProductos();
 }
 
-// CARGAR USUARIOS
 async function cargarUsuarios() {
 
-    const lista = document.getElementById('usuarios-lista');
+    const lista =
+        document.getElementById(
+            'usuarios-lista'
+        );
 
     lista.innerHTML = '';
 
-    const querySnapshot = await getDocs(collection(db, 'users'));
+    const querySnapshot =
+        await getDocs(
+            collection(db, 'users')
+        );
 
     querySnapshot.forEach((docu) => {
 
-        const usuario = docu.data();
+        const usuario =
+            docu.data();
 
         lista.innerHTML += `
 
-        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+        <div class="admin-box">
 
             <h3>${usuario.email}</h3>
 
-            <p>Rol: ${usuario.rol}</p>
+            <p>
+                Rol:
+                ${usuario.rol}
+            </p>
 
             <button onclick="hacerAdmin('${docu.id}')">
+
                 Hacer Admin
+
             </button>
 
         </div>
@@ -415,105 +601,111 @@ async function cargarUsuarios() {
     });
 }
 
-// HACER ADMIN
 async function hacerAdmin(id) {
 
-    await updateDoc(doc(db, 'users', id), {
+    await updateDoc(
+        doc(db, 'users', id),
+        {
 
-        rol: 'admin'
-    });
-
-    alert('Usuario actualizado');
+            rol: 'admin'
+        }
+    );
 
     cargarUsuarios();
 }
 
-// CARGAR PEDIDOS
 async function cargarPedidos() {
 
-    const lista = document.getElementById('pedidos-lista');
+    const lista =
+        document.getElementById(
+            'pedidos-lista'
+        );
 
     lista.innerHTML = '';
 
-    const querySnapshot = await getDocs(collection(db, 'pedidos'));
+    const querySnapshot =
+        await getDocs(
+            collection(db, 'pedidos')
+        );
 
     querySnapshot.forEach((docu) => {
 
-        const pedido = docu.data();
+        const pedido =
+            docu.data();
 
         lista.innerHTML += `
 
-        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+        <div class="admin-box">
 
             <h3>Pedido</h3>
 
-            <p>Cliente: ${pedido.usuario || 'Sin nombre'}</p>
+            <p>
+                Cliente:
+                ${pedido.usuario || 'Sin nombre'}
+            </p>
 
-            <p>Total: $${pedido.total || 0}</p>
-
-            <p>Estado: ${pedido.estado || 'Pendiente'}</p>
+            <p>
+                Total:
+                $${pedido.total || 0}
+            </p>
 
         </div>
         `;
     });
 }
 
-// CARGAR PAGOS
 async function cargarPagos() {
 
-    const lista = document.getElementById('pagos-lista');
+    const lista =
+        document.getElementById(
+            'pagos-lista'
+        );
 
     lista.innerHTML = '';
 
-    const querySnapshot = await getDocs(collection(db, 'pagos'));
+    const querySnapshot =
+        await getDocs(
+            collection(db, 'pagos')
+        );
 
     querySnapshot.forEach((docu) => {
 
-        const pago = docu.data();
+        const pago =
+            docu.data();
 
         lista.innerHTML += `
 
-        <div style="border:1px solid #ccc;padding:15px;margin:15px;">
+        <div class="admin-box">
 
             <h3>Pago</h3>
 
-            <p>Método: ${pago.metodo || 'No definido'}</p>
+            <p>
+                Método:
+                ${pago.metodo || 'No definido'}
+            </p>
 
-            <p>Monto: $${pago.monto || 0}</p>
-
-            <p>Estado: ${pago.estado || 'Pendiente'}</p>
+            <p>
+                Monto:
+                $${pago.monto || 0}
+            </p>
 
         </div>
         `;
     });
 }
 
-// FUNCIONES GLOBALES
 window.logout = logout;
-window.agregarProducto = agregarProducto;
-window.eliminarProducto = eliminarProducto;
-window.hacerAdmin = hacerAdmin;
+
+window.agregarProducto =
+    agregarProducto;
+
+window.eliminarProducto =
+    eliminarProducto;
+
+window.hacerAdmin =
+    hacerAdmin;
 
 </script>
 
 </body>
 </html>
-```
-
-# IMPORTANTE
-
-En Firebase Firestore debes crear estas colecciones:
-
-* users
-* products
-* pedidos
-* pagos
-
-Y en users debes tener:
-
-```json
-{
-  "email": "admin@gmail.com",
-  "rol": "admin"
-}
-```
